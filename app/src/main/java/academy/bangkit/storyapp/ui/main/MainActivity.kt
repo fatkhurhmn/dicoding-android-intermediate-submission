@@ -1,5 +1,6 @@
-package academy.bangkit.storyapp
+package academy.bangkit.storyapp.ui.main
 
+import academy.bangkit.storyapp.R
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
