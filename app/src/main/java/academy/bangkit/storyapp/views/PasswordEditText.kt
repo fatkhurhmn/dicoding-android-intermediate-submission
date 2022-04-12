@@ -1,6 +1,7 @@
 package academy.bangkit.storyapp.views
 
 import academy.bangkit.storyapp.R
+import academy.bangkit.storyapp.utils.Extension.setIcon
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
@@ -35,7 +36,7 @@ class PasswordEditText : AppCompatEditText {
         super.onDraw(canvas)
 
         transformationMethod = PasswordTransformationMethod.getInstance()
-        hint = "Password"
+        hint = resources.getString(R.string.hint_password)
     }
 
     private fun init() {
@@ -53,23 +54,9 @@ class PasswordEditText : AppCompatEditText {
 
             override fun afterTextChanged(s: Editable?) {
                 if (!s.isNullOrEmpty() && s.toString().length < 6) error =
-                    "Password cannot be less than 6 characters"
+                    resources.getString(R.string.error_password)
             }
         })
     }
 
-    private fun setIcon(
-        startOfTheText: Drawable? = null,
-        topOfTheText: Drawable? = null,
-        endOfTheText: Drawable? = null,
-        bottomOfTheText: Drawable? = null
-    ) {
-        setCompoundDrawablesWithIntrinsicBounds(
-            startOfTheText,
-            topOfTheText,
-            endOfTheText,
-            bottomOfTheText
-        )
-        compoundDrawablePadding = 16
-    }
 }
