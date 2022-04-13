@@ -28,7 +28,7 @@
             style="@style/Text.Title.Auth"
             android:fontFamily="@font/opensans_semibold"
             android:text="@string/welcome"
-            app:layout_constraintStart_toStartOf="@id/til_email"
+            app:layout_constraintStart_toStartOf="@id/til_login_email"
             app:layout_constraintTop_toBottomOf="@id/img_welcome_illustration" />
 
         <TextView
@@ -36,11 +36,11 @@
             style="@style/Text.Content"
             android:text="@string/please_login"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@id/til_email"
+            app:layout_constraintStart_toStartOf="@id/til_login_email"
             app:layout_constraintTop_toBottomOf="@id/tv_welcome" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_email"
+            android:id="@+id/til_login_email"
             style="@style/TextInputLayout"
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -53,10 +53,11 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_password"
+            android:id="@+id/til_login_password"
             style="@style/TextInputLayout"
-            app:layout_constraintStart_toStartOf="@id/til_email"
-            app:layout_constraintTop_toBottomOf="@id/til_email">
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@id/til_login_email"
+            app:layout_constraintTop_toBottomOf="@id/til_login_email">
 
             <academy.bangkit.storyapp.views.PasswordEditText
                 android:id="@+id/edt_login_password"
@@ -68,8 +69,8 @@
             style="@style/Button.Auth"
             android:layout_marginTop="8dp"
             android:text="@string/login"
-            app:layout_constraintStart_toStartOf="@id/til_email"
-            app:layout_constraintTop_toBottomOf="@id/til_password" />
+            app:layout_constraintStart_toStartOf="@id/til_login_email"
+            app:layout_constraintTop_toBottomOf="@id/til_login_password" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -86,6 +87,7 @@
                 android:text="@string/dont_have_account" />
 
             <TextView
+                android:id="@+id/btn_to_register"
                 style="@style/Text.Content"
                 android:layout_marginStart="4dp"
                 android:clickable="true"
