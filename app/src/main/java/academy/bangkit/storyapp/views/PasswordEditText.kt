@@ -6,6 +6,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
@@ -42,6 +43,8 @@ class PasswordEditText : AppCompatEditText {
     private fun init() {
         passwordIcon = ContextCompat.getDrawable(context, R.drawable.ic_lock) as Drawable
         setIcon(passwordIcon)
+
+        inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
 
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
