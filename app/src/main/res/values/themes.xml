@@ -13,4 +13,45 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Text.Title">
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+    </style>
+
+    <style name="Text.Title.Auth">
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">?colorSecondary</item>
+    </style>
+
+    <style name="Text.Content">
+        <item name="android:fontFamily">@font/opensans_regular</item>
+    </style>
+
+    <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">330dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
+    </style>
+
+    <style name="Button">
+        <item name="android:fontFamily">@font/opensans_medium</item>
+    </style>
+
+    <style name="Button.Auth">
+        <item name="android:layout_width">330dp</item>
+        <item name="android:layout_height">70dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 </resources>
