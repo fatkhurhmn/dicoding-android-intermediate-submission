@@ -16,10 +16,11 @@
             android:id="@+id/img_welcome_illustration2"
             android:layout_width="250dp"
             android:layout_height="250dp"
+            android:layout_margin="16dp"
             android:layout_marginTop="16dp"
             android:contentDescription="@string/welcome"
             android:src="@drawable/welcome_illustration"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,7 +30,7 @@
             android:fontFamily="@font/opensans_semibold"
             android:text="@string/get_started"
             app:layout_constraintStart_toStartOf="@id/til_register_name"
-            app:layout_constraintTop_toBottomOf="@id/img_welcome_illustration2" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_create_account"
@@ -42,9 +43,9 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_register_name"
             style="@style/TextInputLayout"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/img_welcome_illustration2"
             app:layout_constraintTop_toBottomOf="@id/tv_create_account">
 
             <academy.bangkit.storyapp.views.NameEditText
@@ -57,6 +58,7 @@
             style="@style/TextInputLayout"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="@id/til_register_name"
+
             app:layout_constraintTop_toBottomOf="@id/til_register_name">
 
             <academy.bangkit.storyapp.views.EmailEditText
