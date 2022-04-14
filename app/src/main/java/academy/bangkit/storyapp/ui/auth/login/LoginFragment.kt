@@ -42,10 +42,12 @@ class LoginFragment : Fragment() {
 
     private fun loginCheck() {
         val loginViewModel: LoginViewModel by viewModels { factory }
-
+        binding.root.visibility = View.GONE
         loginViewModel.getAuthToken().observe(viewLifecycleOwner) { token ->
             if (token != "") {
                 moveToMain()
+            }else{
+                binding.root.visibility = View.VISIBLE
             }
         }
     }
