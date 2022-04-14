@@ -1,10 +1,9 @@
 package academy.bangkit.storyapp.data.remote.retrofit
 
+import academy.bangkit.storyapp.data.remote.response.ListStoryResponse
 import academy.bangkit.storyapp.data.remote.response.LoginResponse
 import academy.bangkit.storyapp.data.remote.response.RegisterResponse
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface ApiService {
     @FormUrlEncoded
@@ -21,4 +20,7 @@ interface ApiService {
         @Field("email") email: String,
         @Field("password") password: String
     ): LoginResponse
+
+    @GET("stories")
+    suspend fun getAllStories(@Header("Authorization") token: String): ListStoryResponse
 }
