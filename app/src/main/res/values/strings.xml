@@ -17,4 +17,8 @@
     <string name="create_account">Create an account</string>
     <string name="hint_name">Name</string>
     <string name="fill_form">Fill out the form correctly</string>
+    <string name="logout">Logout</string>
+    <string name="message_logout">Are yo sure want to Logout?"</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

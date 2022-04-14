@@ -24,9 +24,12 @@
     </style>
 
     <style name="Text.Title.Auth">
-        <item name="android:fontFamily">@font/opensans_semibold</item>
         <item name="android:textSize">30sp</item>
         <item name="android:textColor">?colorSecondary</item>
+    </style>
+
+    <style name="Text.Title.Main">
+        <item name="android:textSize">22sp</item>
     </style>
 
     <style name="Text.Content">
@@ -34,7 +37,7 @@
     </style>
 
     <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_width">330dp</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
@@ -49,7 +52,7 @@
     </style>
 
     <style name="Button.Auth">
-        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_width">330dp</item>
         <item name="android:layout_height">70dp</item>
         <item name="textAllCaps">false</item>
         <item name="android:textSize">18sp</item>
