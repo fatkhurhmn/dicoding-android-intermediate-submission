@@ -13,5 +13,5 @@ class MainViewModel(private val storyRepository: StoryRepository) : ViewModel() 
         }
     }
 
-    fun getAuthToken() = storyRepository.getAuthToken()
+    fun getAllStory(token: String) = storyRepository.getAllStories(token)
 }
