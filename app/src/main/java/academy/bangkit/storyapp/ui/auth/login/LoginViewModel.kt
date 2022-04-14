@@ -2,6 +2,15 @@ package academy.bangkit.storyapp.ui.auth.login
 
 import academy.bangkit.storyapp.data.StoryRepository
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
-class LoginViewModel(storyRepository: StoryRepository) : ViewModel() {
+class LoginViewModel(private val storyRepository: StoryRepository) : ViewModel() {
+    fun loginUser(email: String, password: String) = storyRepository.loginUser(email, password)
+
+    fun saveAuthToken(token: String) {
+        viewModelScope.launch {
+            storyRepository.saveAuthToken(token)
+        }
+    }
 }
