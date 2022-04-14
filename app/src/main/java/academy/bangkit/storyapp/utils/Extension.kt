@@ -1,7 +1,9 @@
 package academy.bangkit.storyapp.utils
 
 import android.graphics.drawable.Drawable
+import android.view.View
 import android.widget.TextView
+import com.google.android.material.snackbar.Snackbar
 
 object Extension {
     fun TextView.setIcon(
@@ -17,5 +19,9 @@ object Extension {
             bottomOfTheText
         )
         compoundDrawablePadding = 16
+    }
+
+    fun String.showMessage(view: View) {
+        Snackbar.make(view, this, Snackbar.LENGTH_SHORT).show()
     }
 }
