@@ -29,7 +29,7 @@ class StoryRepository private constructor(
             }
         }
 
-    suspend fun loginUser(email: String, password: String): LiveData<Result<LoginResponse>> =
+    fun loginUser(email: String, password: String): LiveData<Result<LoginResponse>> =
         liveData {
             emit(Result.Loading)
             try {
