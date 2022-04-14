@@ -45,8 +45,8 @@ class LoginFragment : Fragment() {
         binding.root.visibility = View.GONE
         loginViewModel.getAuthToken().observe(viewLifecycleOwner) { token ->
             if (token != "") {
-                moveToMain()
-            }else{
+                moveToMain(token)
+            } else {
                 binding.root.visibility = View.VISIBLE
             }
         }
@@ -71,8 +71,9 @@ class LoginFragment : Fragment() {
                             binding.btnLogin.isClickable = true
                             binding.progressBarLogin.visibility = View.GONE
                             if (!result.data.error) {
-                                loginViewModel.saveAuthToken(result.data.loginResult.token)
-                                moveToMain()
+                                val token = result.data.loginResult.token
+                                loginViewModel.saveAuthToken(token)
+                                moveToMain(token)
                             }
                         }
 
@@ -109,9 +110,10 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun moveToMain() {
+    private fun moveToMain(token: String) {
         val mainIntent = Intent(requireContext(), MainActivity::class.java)
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        mainIntent.putExtra(MainActivity.EXTRA_TOKEN, token)
         startActivity(mainIntent)
         activity?.finish()
     }

@@ -5,11 +5,9 @@ import academy.bangkit.storyapp.data.remote.response.ListStoryResponse
 import academy.bangkit.storyapp.data.remote.response.LoginResponse
 import academy.bangkit.storyapp.data.remote.response.RegisterResponse
 import academy.bangkit.storyapp.data.remote.retrofit.ApiService
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
-import java.lang.Exception
 
 class StoryRepository private constructor(
     private val apiService: ApiService,
