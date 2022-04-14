@@ -21,4 +21,6 @@
     <string name="message_logout">Are yo sure want to Logout?"</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="name">Photo by %s</string>
+    <string name="desc_photo_story">photo story</string>
 </resources>

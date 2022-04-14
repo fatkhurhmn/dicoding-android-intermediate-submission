@@ -36,6 +36,12 @@
         <item name="android:fontFamily">@font/opensans_regular</item>
     </style>
 
+    <style name="Text.Content.Main">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+    </style>
+
     <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">330dp</item>
         <item name="android:layout_height">wrap_content</item>
