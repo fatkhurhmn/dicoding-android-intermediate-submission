@@ -62,7 +62,7 @@
             app:layout_constraintTop_toBottomOf="@id/til_register_name">
 
             <academy.bangkit.storyapp.views.EmailEditText
-                android:id="@+id/edt_login_email"
+                android:id="@+id/edt_register_email"
                 style="@style/EditText" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,7 +74,7 @@
             app:layout_constraintTop_toBottomOf="@id/til_register_email">
 
             <academy.bangkit.storyapp.views.PasswordEditText
-                android:id="@+id/edt_login_password"
+                android:id="@+id/edt_register_password"
                 style="@style/EditText" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -111,5 +111,16 @@
                 android:text="@string/login"
                 android:textColor="@color/pink_500" />
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_bar_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
