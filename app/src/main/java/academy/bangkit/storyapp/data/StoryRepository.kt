@@ -46,6 +46,8 @@ class StoryRepository private constructor(
 
     fun getAuthToken(): LiveData<String> = userPreferences.getAuthToken().asLiveData()
 
+    suspend fun deleteSession() = userPreferences.deleteSession()
+
     companion object {
         @Volatile
         private var instance: StoryRepository? = null

@@ -21,6 +21,12 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         }
     }
 
+    suspend fun deleteSession() {
+        dataStore.edit {
+            it.clear()
+        }
+    }
+
     companion object {
         private val AUTH_KEY = stringPreferencesKey("AUTH_TOKEN")
 
