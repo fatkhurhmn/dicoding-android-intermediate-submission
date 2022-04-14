@@ -20,6 +20,7 @@ class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+    private lateinit var factory: ViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,12 +33,24 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        factory = ViewModelFactory.getInstance(requireContext())
+
+        loginCheck()
         moveToRegister()
         handleLogin()
     }
 
+    private fun loginCheck() {
+        val loginViewModel: LoginViewModel by viewModels { factory }
+
+        loginViewModel.getAuthToken().observe(viewLifecycleOwner) { token ->
+            if (token != "") {
+                moveToMain()
+            }
+        }
+    }
+
     private fun handleLogin() {
-        val factory: ViewModelFactory = ViewModelFactory.getInstance(requireContext())
         val loginViewModel: LoginViewModel by viewModels { factory }
 
         binding.btnLogin.setOnClickListener {
@@ -57,8 +70,7 @@ class LoginFragment : Fragment() {
                             binding.progressBarLogin.visibility = View.GONE
                             if (!result.data.error) {
                                 loginViewModel.saveAuthToken(result.data.loginResult.token)
-                                val mainIntent = Intent(requireContext(), MainActivity::class.java)
-                                startActivity(mainIntent)
+                                moveToMain()
                             }
                         }
 
@@ -93,6 +105,13 @@ class LoginFragment : Fragment() {
                 )
             }
         }
+    }
+
+    private fun moveToMain() {
+        val mainIntent = Intent(requireContext(), MainActivity::class.java)
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(mainIntent)
+        activity?.finish()
     }
 
     override fun onDestroy() {
