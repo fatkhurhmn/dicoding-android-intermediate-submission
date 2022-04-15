@@ -32,6 +32,10 @@
         <item name="android:textSize">22sp</item>
     </style>
 
+    <style name="Text.Title.Create">
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <style name="Text.Content">
         <item name="android:fontFamily">@font/opensans_regular</item>
     </style>

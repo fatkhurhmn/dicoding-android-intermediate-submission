@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StoryApp">
         <activity
-            android:name=".ui.create.AddStoryActivity"
+            android:name=".ui.create.CreateStoryActivity"
             android:exported="false" />
         <activity
             android:name=".ui.auth.AuthenticationActivity"
