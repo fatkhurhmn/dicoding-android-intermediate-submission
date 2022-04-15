@@ -3,6 +3,7 @@
     package="academy.bangkit.storyapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,6 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.StoryApp">
+        <activity
+            android:name=".ui.create.AddStoryActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.auth.AuthenticationActivity"
             android:exported="true">
