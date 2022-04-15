@@ -79,7 +79,8 @@ class CreateStoryActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener
                 "Fill the description".showMessage(binding.root)
             } else {
                 val desc = description.toRequestBody("text/plain".toMediaType())
-                val imageMultipart = MediaHelper.fileToImageMultipart(getFile)
+                val file = MediaHelper.reduceFileImage(getFile as File)
+                val imageMultipart = MediaHelper.fileToImageMultipart(file)
                 if (token != null) {
                     createStoryViewModel.uploadNewStory(token, imageMultipart, desc)
                         .observe(this) { result ->

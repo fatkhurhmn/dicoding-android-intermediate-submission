@@ -2,15 +2,14 @@ package academy.bangkit.storyapp.utils
 
 import android.content.ContentResolver
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Environment
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
-import java.io.OutputStream
+import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -44,12 +43,27 @@ object MediaHelper {
 
     fun fileToImageMultipart(file: File?): MultipartBody.Part {
         val myFile = file as File
-        val requestImageFile = myFile.asRequestBody("image/*".toMediaType())
+        val requestImageFile = myFile.asRequestBody("image/jpeg".toMediaType())
 
         return MultipartBody.Part.createFormData(
             "photo",
             myFile.name,
             requestImageFile
         )
+    }
+
+    fun reduceFileImage(file: File): File {
+        val bitmap = BitmapFactory.decodeFile(file.path)
+        var compressQuality = 100
+        var streamLength: Int
+        do {
+            val bmpStream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpStream)
+            val bmpPicByteArray = bmpStream.toByteArray()
+            streamLength = bmpPicByteArray.size
+            compressQuality -= 5
+        } while (streamLength > 1000000)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
+        return file
     }
 }
