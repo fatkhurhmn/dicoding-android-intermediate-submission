@@ -3,6 +3,7 @@ package academy.bangkit.storyapp.ui.main
 import academy.bangkit.storyapp.R
 import academy.bangkit.storyapp.adapter.ListStoryAdapter
 import academy.bangkit.storyapp.data.Result
+import academy.bangkit.storyapp.data.remote.response.Story
 import academy.bangkit.storyapp.databinding.ActivityMainBinding
 import academy.bangkit.storyapp.ui.auth.AuthenticationActivity
 import academy.bangkit.storyapp.ui.create.CreateStoryActivity
@@ -67,7 +68,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                         binding.progressBarMain.visibility = View.GONE
                         val stories = result.data.stories
                         if (!result.data.error) {
-                            listStoryAdapter.submitList(stories)
+                            listStoryAdapter.setStories(stories as ArrayList<Story>)
                             Log.d("CEK", "getListStories1: $stories")
                             showListStory()
                         }
