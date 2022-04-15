@@ -5,6 +5,7 @@ import academy.bangkit.storyapp.adapter.ListStoryAdapter
 import academy.bangkit.storyapp.data.Result
 import academy.bangkit.storyapp.databinding.ActivityMainBinding
 import academy.bangkit.storyapp.ui.auth.AuthenticationActivity
+import academy.bangkit.storyapp.ui.create.CreateStoryActivity
 import academy.bangkit.storyapp.utils.Extension.showMessage
 import academy.bangkit.storyapp.utils.SpacesItemDecoration
 import academy.bangkit.storyapp.utils.ViewModelFactory
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
         setupToolbar()
         getListStories()
+        createStory()
     }
 
     private fun getListStories() {
@@ -83,6 +85,15 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 }
             adapter = listStoryAdapter
             setHasFixedSize(true)
+        }
+    }
+
+    private fun createStory() {
+        val token = intent.getStringExtra(EXTRA_TOKEN)
+        binding.fabAddStory.setOnClickListener {
+            val createStoryIntent = Intent(this, CreateStoryActivity::class.java)
+            createStoryIntent.putExtra(EXTRA_TOKEN, token)
+            startActivity(createStoryIntent)
         }
     }
 
