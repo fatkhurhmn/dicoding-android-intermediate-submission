@@ -1,7 +1,7 @@
 package academy.bangkit.storyapp.ui.create
 
 import academy.bangkit.storyapp.R
-import academy.bangkit.storyapp.databinding.ActivityAddStoryBinding
+import academy.bangkit.storyapp.databinding.ActivityCreateStoryBinding
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
@@ -10,11 +10,11 @@ import androidx.appcompat.widget.Toolbar
 
 class CreateStoryActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
-    private lateinit var binding: ActivityAddStoryBinding
+    private lateinit var binding: ActivityCreateStoryBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAddStoryBinding.inflate(layoutInflater)
+        binding = ActivityCreateStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setupToolbar()
