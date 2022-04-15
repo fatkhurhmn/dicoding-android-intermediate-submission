@@ -1,9 +1,13 @@
 package academy.bangkit.storyapp.ui.create
 
 import academy.bangkit.storyapp.R
+import academy.bangkit.storyapp.data.Result
 import academy.bangkit.storyapp.databinding.ActivityCreateStoryBinding
+import academy.bangkit.storyapp.ui.main.MainActivity
+import academy.bangkit.storyapp.utils.Extension.showMessage
 import academy.bangkit.storyapp.utils.MediaHelper
 import academy.bangkit.storyapp.utils.MediaHelper.uriToFile
+import academy.bangkit.storyapp.utils.ViewModelFactory
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -11,10 +15,13 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.FileProvider
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 
 class CreateStoryActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
@@ -22,6 +29,8 @@ class CreateStoryActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener
     private lateinit var binding: ActivityCreateStoryBinding
     private lateinit var currentPhotoPath: String
     private var getFile: File? = null
+
+    private lateinit var factory: ViewModelFactory
 
     private val launcherIntentCamera =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -50,9 +59,55 @@ class CreateStoryActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener
         binding = ActivityCreateStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        factory = ViewModelFactory.getInstance(this)
+
         setupToolbar()
         takeImageFromCamera()
         takeImageFromGallery()
+        uploadStory()
+    }
+
+    private fun uploadStory() {
+        val createStoryViewModel: CreateStoryViewModel by viewModels { factory }
+        val token = intent.getStringExtra(MainActivity.EXTRA_TOKEN)
+        binding.btnUpload.setOnClickListener {
+            val description = binding.edtDescription.text.toString().trim()
+
+            if (getFile == null) {
+                "Take image first".showMessage(binding.root)
+            } else if (description.isEmpty()) {
+                "Fill the description".showMessage(binding.root)
+            } else {
+                val desc = description.toRequestBody("text/plain".toMediaType())
+                val imageMultipart = MediaHelper.fileToImageMultipart(getFile)
+                if (token != null) {
+                    createStoryViewModel.uploadNewStory(token, imageMultipart, desc)
+                        .observe(this) { result ->
+                            when (result) {
+                                is Result.Loading -> {
+                                    "Loading...".showMessage(binding.root)
+                                }
+
+                                is Result.Success -> {
+                                    val message = result.data.message
+                                    val isError = result.data.error
+                                    message.showMessage(binding.root)
+                                    if (!isError) {
+                                        val resultIntent = Intent()
+                                        resultIntent.putExtra(MainActivity.EXTRA_ERROR, isError)
+                                        setResult(MainActivity.RESULT_CREATE, resultIntent)
+                                        finish()
+                                    }
+                                }
+
+                                is Result.Error -> {
+                                    result.error.showMessage(binding.root)
+                                }
+                            }
+                        }
+                }
+            }
+        }
     }
 
     private fun takeImageFromGallery() {
@@ -88,12 +143,26 @@ class CreateStoryActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener
     }
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
+        val description = binding.edtDescription.text.toString()
         return when (item?.itemId) {
             R.id.btn_close_create -> {
-                showCloseDialog()
+                if (description.isNotEmpty() || getFile != null) {
+                    showCloseDialog()
+                } else {
+                    finish()
+                }
                 true
             }
             else -> false
+        }
+    }
+
+    override fun onBackPressed() {
+        val description = binding.edtDescription.text.toString()
+        if (description.isNotEmpty() || getFile != null) {
+            showCloseDialog()
+        } else {
+            finish()
         }
     }
 

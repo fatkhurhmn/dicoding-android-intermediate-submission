@@ -4,6 +4,7 @@ import academy.bangkit.storyapp.data.StoryRepository
 import academy.bangkit.storyapp.di.Injection
 import academy.bangkit.storyapp.ui.auth.login.LoginViewModel
 import academy.bangkit.storyapp.ui.auth.register.RegisterViewModel
+import academy.bangkit.storyapp.ui.create.CreateStoryViewModel
 import academy.bangkit.storyapp.ui.main.MainViewModel
 import android.content.Context
 import androidx.lifecycle.ViewModel
@@ -22,6 +23,9 @@ class ViewModelFactory private constructor(private val storyRepository: StoryRep
             }
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
                 MainViewModel(storyRepository) as T
+            }
+            modelClass.isAssignableFrom(CreateStoryViewModel::class.java) -> {
+                CreateStoryViewModel(storyRepository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel Class:" + modelClass.name)
         }

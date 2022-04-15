@@ -76,7 +76,7 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edt_description"
+                android:id="@+id/til_description"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="300dp"
                 android:layout_height="150dp"
@@ -86,12 +86,16 @@
                 app:layout_constraintTop_toBottomOf="@id/take_image">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_description"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:focusable="auto"
                     android:fontFamily="@font/opensans_regular"
                     android:gravity="top|left"
                     android:hint="@string/description"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     tools:ignore="RtlHardcoded" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -100,9 +104,9 @@
                 style="@style/Button.Create"
                 android:layout_marginTop="8dp"
                 android:text="@string/upload"
-                app:layout_constraintEnd_toEndOf="@id/edt_description"
-                app:layout_constraintStart_toStartOf="@id/edt_description"
-                app:layout_constraintTop_toBottomOf="@id/edt_description" />
+                app:layout_constraintEnd_toEndOf="@id/til_description"
+                app:layout_constraintStart_toStartOf="@id/til_description"
+                app:layout_constraintTop_toBottomOf="@id/til_description" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
