@@ -15,6 +15,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +28,17 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var factory: ViewModelFactory
     private val listStoryAdapter: ListStoryAdapter by lazy { ListStoryAdapter() }
+
+    private val launcherCreateStoryIntent =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_CREATE && it.data != null) {
+                val isError = it.data!!.getBooleanExtra(EXTRA_ERROR, true)
+                Log.d("Iscoba", "isError: $isError")
+                if (!isError) {
+                    getListStories()
+                }
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,7 +105,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         binding.fabAddStory.setOnClickListener {
             val createStoryIntent = Intent(this, CreateStoryActivity::class.java)
             createStoryIntent.putExtra(EXTRA_TOKEN, token)
-            startActivity(createStoryIntent)
+            launcherCreateStoryIntent.launch(createStoryIntent)
         }
     }
 
@@ -134,5 +146,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
     companion object {
         const val EXTRA_TOKEN = "academy.bangkit.storyapp.EXTRA_TOKEN"
+        const val RESULT_CREATE = 100
+        const val EXTRA_ERROR = "academy.bangkit.storyapp.ERROR"
     }
 }
