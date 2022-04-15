@@ -7,13 +7,13 @@ import academy.bangkit.storyapp.data.remote.response.Story
 import academy.bangkit.storyapp.databinding.ActivityMainBinding
 import academy.bangkit.storyapp.ui.auth.AuthenticationActivity
 import academy.bangkit.storyapp.ui.create.CreateStoryActivity
+import academy.bangkit.storyapp.ui.detail.StoryDetailActivity
 import academy.bangkit.storyapp.utils.Extension.showMessage
 import academy.bangkit.storyapp.utils.SpacesItemDecoration
 import academy.bangkit.storyapp.utils.ViewModelFactory
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == RESULT_CREATE && it.data != null) {
                 val isError = it.data!!.getBooleanExtra(EXTRA_ERROR, true)
-                Log.d("Iscoba", "isError: $isError")
                 if (!isError) {
                     getListStories()
                 }
@@ -51,6 +50,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         setupToolbar()
         getListStories()
         createStory()
+        actionToDetail()
     }
 
     private fun getListStories() {
@@ -69,7 +69,6 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                         val stories = result.data.stories
                         if (!result.data.error) {
                             listStoryAdapter.setStories(stories as ArrayList<Story>)
-                            Log.d("CEK", "getListStories1: $stories")
                             showListStory()
                         }
                     }
@@ -108,6 +107,17 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             createStoryIntent.putExtra(EXTRA_TOKEN, token)
             launcherCreateStoryIntent.launch(createStoryIntent)
         }
+    }
+
+    private fun actionToDetail() {
+        listStoryAdapter.setOnItemClickCallback(object : ListStoryAdapter.OnItemClickCallback {
+            override fun onItemClicked(story: Story) {
+                val detailIntent = Intent(this@MainActivity, StoryDetailActivity::class.java)
+                detailIntent.putExtra(StoryDetailActivity.EXTRA_DETAIL, story)
+                startActivity(detailIntent)
+            }
+
+        })
     }
 
     private fun setupToolbar() {

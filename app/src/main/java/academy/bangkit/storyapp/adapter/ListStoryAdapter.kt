@@ -11,10 +11,15 @@ import androidx.recyclerview.widget.RecyclerView
 class ListStoryAdapter : RecyclerView.Adapter<ListStoryAdapter.ListViewHolder>() {
 
     private val stories = ArrayList<Story>()
+    private lateinit var onItemClickCallback: OnItemClickCallback
 
     fun setStories(stories: ArrayList<Story>) {
         this.stories.clear()
         this.stories.addAll(stories)
+    }
+
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
     }
 
     override fun getItemCount(): Int {
@@ -29,6 +34,9 @@ class ListStoryAdapter : RecyclerView.Adapter<ListStoryAdapter.ListViewHolder>()
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val story = stories[position]
         holder.bind(story)
+        holder.itemView.setOnClickListener {
+            onItemClickCallback.onItemClicked(story)
+        }
     }
 
     class ListViewHolder(private val binding: StoryItemBinding) :
@@ -38,5 +46,9 @@ class ListStoryAdapter : RecyclerView.Adapter<ListStoryAdapter.ListViewHolder>()
             binding.tvStoryName.text = itemView.resources.getString(R.string.name, story.name)
             binding.imgStoryPhoto.loadImage(story.photoUrl)
         }
+    }
+
+    interface OnItemClickCallback {
+        fun onItemClicked(story: Story)
     }
 }
