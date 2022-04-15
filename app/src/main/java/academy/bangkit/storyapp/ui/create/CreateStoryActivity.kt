@@ -87,15 +87,11 @@ class CreateStoryActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener
                         .observe(this) { result ->
                             when (result) {
                                 is Result.Loading -> {
-                                    with(binding) {
-                                        progressBarCreate.visibility = View.VISIBLE
-                                        btnUpload.isClickable = false
-                                        btnToGallery.isClickable = false
-                                        btnToCamera.isClickable = false
-                                    }
+                                    setupLoading(true)
                                 }
 
                                 is Result.Success -> {
+                                    setupLoading(false)
                                     val message = result.data.message
                                     val isError = result.data.error
                                     message.showMessage(binding.root)
@@ -108,6 +104,7 @@ class CreateStoryActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener
                                 }
 
                                 is Result.Error -> {
+                                    setupLoading(false)
                                     result.error.showMessage(binding.root)
                                 }
                             }
@@ -171,6 +168,15 @@ class CreateStoryActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener
         } else {
             finish()
         }
+    }
+
+    private fun setupLoading(isLoading: Boolean) {
+        with(binding) {
+            btnToCamera.isClickable = !isLoading
+            btnToGallery.isClickable = !isLoading
+            btnUpload.isClickable = !isLoading
+        }
+        binding.progressBarCreate.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun showCloseDialog() {
