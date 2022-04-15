@@ -6,11 +6,13 @@ import academy.bangkit.storyapp.data.remote.response.ListStoryResponse
 import academy.bangkit.storyapp.data.remote.response.LoginResponse
 import academy.bangkit.storyapp.data.remote.response.RegisterResponse
 import academy.bangkit.storyapp.data.remote.retrofit.ApiService
+import academy.bangkit.storyapp.utils.Extension.getErrorMessage
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.HttpException
 
 class StoryRepository private constructor(
     private val apiService: ApiService,
@@ -27,7 +29,17 @@ class StoryRepository private constructor(
                 val response = apiService.registerUser(name, email, password)
                 emit(Result.Success(response))
             } catch (e: Exception) {
-                emit(Result.Error(e.message.toString()))
+                when (e) {
+                    is HttpException -> {
+                        val message = e.getErrorMessage()
+                        if (message != null) {
+                            emit(Result.Error(message))
+                        }
+                    }
+                    else -> {
+                        emit(Result.Error(e.message.toString()))
+                    }
+                }
             }
         }
 
@@ -38,7 +50,17 @@ class StoryRepository private constructor(
                 val response = apiService.loginUser(email, password)
                 emit(Result.Success(response))
             } catch (e: Exception) {
-                emit(Result.Error(e.message.toString()))
+                when (e) {
+                    is HttpException -> {
+                        val message = e.getErrorMessage()
+                        if (message != null) {
+                            emit(Result.Error(message))
+                        }
+                    }
+                    else -> {
+                        emit(Result.Error(e.message.toString()))
+                    }
+                }
             }
         }
 
@@ -49,7 +71,17 @@ class StoryRepository private constructor(
                 val response = apiService.getAllStories(token)
                 emit(Result.Success(response))
             } catch (e: Exception) {
-                emit(Result.Error(e.message.toString()))
+                when (e) {
+                    is HttpException -> {
+                        val message = e.getErrorMessage()
+                        if (message != null) {
+                            emit(Result.Error(message))
+                        }
+                    }
+                    else -> {
+                        emit(Result.Error(e.message.toString()))
+                    }
+                }
             }
         }
 
@@ -64,7 +96,17 @@ class StoryRepository private constructor(
                 val response = apiService.uploadNewStory(token, image, description)
                 emit(Result.Success(response))
             } catch (e: Exception) {
-                emit(Result.Error(e.message.toString()))
+                when (e) {
+                    is HttpException -> {
+                        val message = e.getErrorMessage()
+                        if (message != null) {
+                            emit(Result.Error(message))
+                        }
+                    }
+                    else -> {
+                        emit(Result.Error(e.message.toString()))
+                    }
+                }
             }
         }
 

@@ -8,6 +8,8 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.Snackbar
+import org.json.JSONObject
+import retrofit2.HttpException
 
 object Extension {
     fun TextView.setIcon(
@@ -35,5 +37,11 @@ object Extension {
             .apply(RequestOptions().override(500, 500).placeholder(R.drawable.ic_default_photo))
             .centerInside()
             .into(this)
+    }
+
+    fun HttpException.getErrorMessage(): String? {
+        val response = this.response()?.errorBody()?.string()
+        val jsonObject = response?.let { JSONObject(it) }
+        return jsonObject?.getString("message")
     }
 }
