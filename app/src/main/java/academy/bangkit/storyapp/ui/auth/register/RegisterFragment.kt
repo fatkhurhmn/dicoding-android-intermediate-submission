@@ -46,16 +46,11 @@ class RegisterFragment : Fragment() {
                     .observe(viewLifecycleOwner) { result ->
                         when (result) {
                             is Result.Loading -> {
-                                with(binding) {
-                                    btnRegister.isClickable = false
-                                    btnToLogin.isClickable = false
-                                    progressBarRegister.visibility = View.VISIBLE
-                                }
+                                setupLoading(true)
                             }
 
                             is Result.Success -> {
-                                binding.btnRegister.isClickable = true
-                                binding.progressBarRegister.visibility = View.GONE
+                                setupLoading(false)
                                 result.data.message.showMessage(binding.root)
                                 if (!result.data.error) {
                                     val mFragmentManager = parentFragmentManager
@@ -64,8 +59,7 @@ class RegisterFragment : Fragment() {
                             }
 
                             is Result.Error -> {
-                                binding.btnRegister.isClickable = true
-                                binding.progressBarRegister.visibility = View.GONE
+                                setupLoading(false)
                                 result.error.showMessage(binding.root)
                             }
                         }
@@ -88,6 +82,14 @@ class RegisterFragment : Fragment() {
             val mFragmentManager = parentFragmentManager
             mFragmentManager.popBackStack()
         }
+    }
+
+    private fun setupLoading(isLoading: Boolean) {
+        with(binding) {
+            btnRegister.isClickable = !isLoading
+            btnToLogin.isClickable = !isLoading
+        }
+        binding.progressBarRegister.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onDestroy() {

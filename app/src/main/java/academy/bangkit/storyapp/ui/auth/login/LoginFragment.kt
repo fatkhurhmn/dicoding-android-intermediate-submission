@@ -63,16 +63,11 @@ class LoginFragment : Fragment() {
                 loginViewModel.loginUser(email, password).observe(viewLifecycleOwner) { result ->
                     when (result) {
                         is Result.Loading -> {
-                            with(binding){
-                                btnLogin.isClickable = false
-                                btnToRegister.isAllCaps = false
-                                progressBarLogin.visibility = View.VISIBLE
-                            }
+                            setupLoading(true)
                         }
 
                         is Result.Success -> {
-                            binding.btnLogin.isClickable = true
-                            binding.progressBarLogin.visibility = View.GONE
+                            setupLoading(false)
                             if (!result.data.error) {
                                 val token = result.data.loginResult.token
                                 loginViewModel.saveAuthToken(token)
@@ -81,8 +76,7 @@ class LoginFragment : Fragment() {
                         }
 
                         is Result.Error -> {
-                            binding.btnLogin.isClickable = true
-                            binding.progressBarLogin.visibility = View.GONE
+                            setupLoading(false)
                             result.error.showMessage(binding.root)
                         }
                     }
@@ -119,6 +113,14 @@ class LoginFragment : Fragment() {
         mainIntent.putExtra(MainActivity.EXTRA_TOKEN, token)
         startActivity(mainIntent)
         activity?.finish()
+    }
+
+    private fun setupLoading(isLoading: Boolean) {
+        with(binding) {
+            btnLogin.isClickable = !isLoading
+            btnToRegister.isClickable = !isLoading
+        }
+        binding.progressBarLogin.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onDestroy() {
