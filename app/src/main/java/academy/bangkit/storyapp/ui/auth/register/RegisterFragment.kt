@@ -46,8 +46,11 @@ class RegisterFragment : Fragment() {
                     .observe(viewLifecycleOwner) { result ->
                         when (result) {
                             is Result.Loading -> {
-                                binding.btnRegister.isClickable = false
-                                binding.progressBarRegister.visibility = View.VISIBLE
+                                with(binding) {
+                                    btnRegister.isClickable = false
+                                    btnToLogin.isClickable = false
+                                    progressBarRegister.visibility = View.VISIBLE
+                                }
                             }
 
                             is Result.Success -> {

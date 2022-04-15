@@ -63,8 +63,11 @@ class LoginFragment : Fragment() {
                 loginViewModel.loginUser(email, password).observe(viewLifecycleOwner) { result ->
                     when (result) {
                         is Result.Loading -> {
-                            binding.btnLogin.isClickable = false
-                            binding.progressBarLogin.visibility = View.VISIBLE
+                            with(binding){
+                                btnLogin.isClickable = false
+                                btnToRegister.isAllCaps = false
+                                progressBarLogin.visibility = View.VISIBLE
+                            }
                         }
 
                         is Result.Success -> {
