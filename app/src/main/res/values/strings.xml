@@ -23,4 +23,5 @@
     <string name="no">No</string>
     <string name="name">Photo by %s</string>
     <string name="desc_photo_story">photo story</string>
+    <string name="something_went_wrong">Something went wrong</string>
 </resources>

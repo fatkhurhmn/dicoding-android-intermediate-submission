@@ -8,13 +8,16 @@ import academy.bangkit.storyapp.ui.auth.AuthenticationActivity
 import academy.bangkit.storyapp.utils.Extension.showMessage
 import academy.bangkit.storyapp.utils.ViewModelFactory
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 
 class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
@@ -42,10 +45,11 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             mainViewModel.getAllStory("Bearer $token").observe(this) { result ->
                 when (result) {
                     is Result.Loading -> {
-                        "Loading".showMessage(binding.root)
+                        binding.progressBarMain.visibility = View.VISIBLE
                     }
 
                     is Result.Success -> {
+                        binding.progressBarMain.visibility = View.GONE
                         val stories = result.data.stories
                         if (!result.data.error) {
                             listStoryAdapter.submitList(stories)
@@ -55,6 +59,11 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                     }
 
                     is Result.Error -> {
+                        with(binding) {
+                            progressBarMain.visibility = View.GONE
+                            rvStory.visibility = View.GONE
+                            imgError.visibility = View.VISIBLE
+                        }
                         result.error.showMessage(binding.root)
                     }
                 }
@@ -64,7 +73,11 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
     private fun showListStory() {
         with(binding.rvStory) {
-            layoutManager = LinearLayoutManager(this@MainActivity)
+            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                layoutManager = LinearLayoutManager(this@MainActivity)
+            } else {
+                layoutManager = GridLayoutManager(this@MainActivity, 2)
+            }
             adapter = listStoryAdapter
             setHasFixedSize(true)
         }
