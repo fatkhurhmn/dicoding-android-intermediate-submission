@@ -1,6 +1,7 @@
 package academy.bangkit.storyapp.data
 
 import academy.bangkit.storyapp.data.local.UserPreferences
+import academy.bangkit.storyapp.data.remote.response.FileUploadResponse
 import academy.bangkit.storyapp.data.remote.response.ListStoryResponse
 import academy.bangkit.storyapp.data.remote.response.LoginResponse
 import academy.bangkit.storyapp.data.remote.response.RegisterResponse
@@ -8,6 +9,8 @@ import academy.bangkit.storyapp.data.remote.retrofit.ApiService
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 class StoryRepository private constructor(
     private val apiService: ApiService,
@@ -44,6 +47,21 @@ class StoryRepository private constructor(
             emit(Result.Loading)
             try {
                 val response = apiService.getAllStories(token)
+                emit(Result.Success(response))
+            } catch (e: Exception) {
+                emit(Result.Error(e.message.toString()))
+            }
+        }
+
+    fun uploadNewStory(
+        token: String,
+        image: MultipartBody.Part,
+        description: RequestBody
+    ): LiveData<Result<FileUploadResponse>> =
+        liveData {
+            emit(Result.Loading)
+            try {
+                val response = apiService.uploadNewStory(token, image, description)
                 emit(Result.Success(response))
             } catch (e: Exception) {
                 emit(Result.Error(e.message.toString()))
