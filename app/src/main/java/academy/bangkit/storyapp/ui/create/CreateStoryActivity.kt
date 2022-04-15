@@ -14,6 +14,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -74,9 +75,9 @@ class CreateStoryActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener
             val description = binding.edtDescription.text.toString().trim()
 
             if (getFile == null) {
-                "Take image first".showMessage(binding.root)
+                getString(R.string.take_image_first).showMessage(binding.root)
             } else if (description.isEmpty()) {
-                "Fill the description".showMessage(binding.root)
+                getString(R.string.fill_desc).showMessage(binding.root)
             } else {
                 val desc = description.toRequestBody("text/plain".toMediaType())
                 val file = MediaHelper.reduceFileImage(getFile as File)
@@ -86,7 +87,12 @@ class CreateStoryActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener
                         .observe(this) { result ->
                             when (result) {
                                 is Result.Loading -> {
-                                    "Loading...".showMessage(binding.root)
+                                    with(binding) {
+                                        progressBarCreate.visibility = View.VISIBLE
+                                        btnUpload.isClickable = false
+                                        btnToGallery.isClickable = false
+                                        btnToCamera.isClickable = false
+                                    }
                                 }
 
                                 is Result.Success -> {
