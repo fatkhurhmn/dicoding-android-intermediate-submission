@@ -6,6 +6,7 @@ import academy.bangkit.storyapp.data.Result
 import academy.bangkit.storyapp.databinding.ActivityMainBinding
 import academy.bangkit.storyapp.ui.auth.AuthenticationActivity
 import academy.bangkit.storyapp.utils.Extension.showMessage
+import academy.bangkit.storyapp.utils.SpacesItemDecoration
 import academy.bangkit.storyapp.utils.ViewModelFactory
 import android.content.Intent
 import android.content.res.Configuration
@@ -73,11 +74,13 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
     private fun showListStory() {
         with(binding.rvStory) {
-            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                layoutManager = LinearLayoutManager(this@MainActivity)
-            } else {
-                layoutManager = GridLayoutManager(this@MainActivity, 2)
-            }
+            addItemDecoration(SpacesItemDecoration(16))
+            layoutManager =
+                if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    LinearLayoutManager(this@MainActivity)
+                } else {
+                    GridLayoutManager(this@MainActivity, 2)
+                }
             adapter = listStoryAdapter
             setHasFixedSize(true)
         }
