@@ -4,6 +4,9 @@ import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
 import android.os.Environment
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -37,5 +40,16 @@ object MediaHelper {
         inputStream.close()
 
         return myFile
+    }
+
+    fun fileToImageMultipart(file: File?): MultipartBody.Part {
+        val myFile = file as File
+        val requestImageFile = myFile.asRequestBody("image/*".toMediaType())
+
+        return MultipartBody.Part.createFormData(
+            "photo",
+            myFile.name,
+            requestImageFile
+        )
     }
 }
