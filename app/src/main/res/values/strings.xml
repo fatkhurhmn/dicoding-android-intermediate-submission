@@ -31,7 +31,8 @@
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
     <string name="upload">Upload</string>
-    <string name="description">Description</string>
+    <string name="description">~ %s</string>
     <string name="take_image_first">Take image first</string>
     <string name="fill_desc">sFill the description</string>
+    <string name="date">Date</string>
 </resources>
