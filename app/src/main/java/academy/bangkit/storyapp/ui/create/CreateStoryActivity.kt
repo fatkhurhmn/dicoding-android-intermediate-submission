@@ -36,7 +36,7 @@ class CreateStoryActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener
 
     private fun showCloseDialog() {
         val alertDialogBuilder = AlertDialog.Builder(this).apply {
-            setTitle(getString(R.string.logout))
+            setTitle(getString(R.string.close))
             setMessage(getString(R.string.message_close))
             setCancelable(false)
             setPositiveButton(getString(R.string.yes)) { _, _ ->
