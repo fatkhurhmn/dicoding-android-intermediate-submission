@@ -47,8 +47,8 @@
     </style>
 
     <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="android:layout_width">330dp</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_height">60dp</item>
     </style>
 
     <style name="EditText">
@@ -64,8 +64,8 @@
     </style>
 
     <style name="Button.Auth">
-        <item name="android:layout_width">330dp</item>
-        <item name="android:layout_height">70dp</item>
+        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_height">60dp</item>
     </style>
 
     <style name="Button.Create">
