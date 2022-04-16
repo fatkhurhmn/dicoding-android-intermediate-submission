@@ -25,6 +25,7 @@
 
     <style name="Text.Title.Auth">
         <item name="android:textSize">30sp</item>
+        <item name="android:layout_width">300dp</item>
         <item name="android:textColor">?colorSecondary</item>
     </style>
 

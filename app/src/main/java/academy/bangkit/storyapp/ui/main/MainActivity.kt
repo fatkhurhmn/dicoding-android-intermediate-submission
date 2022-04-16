@@ -13,11 +13,10 @@ import academy.bangkit.storyapp.utils.Extension.showMessage
 import academy.bangkit.storyapp.utils.SpacesItemDecoration
 import academy.bangkit.storyapp.utils.ViewModelFactory
 import android.app.Activity
-import android.app.ActivityOptions
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Pair
+import android.provider.Settings
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
@@ -138,6 +137,12 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         return when (item?.itemId) {
             R.id.btn_logout -> {
                 showLogoutDialog()
+                true
+            }
+
+            R.id.btn_locale->{
+                val localeIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+                startActivity(localeIntent)
                 true
             }
             else -> false

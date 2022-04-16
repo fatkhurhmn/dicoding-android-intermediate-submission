@@ -29,7 +29,7 @@ class StoryDetailActivity : AppCompatActivity() {
                 imgDetailPhoto.loadImage(detail.photoUrl)
                 tvDetailName.text = getString(R.string.name, detail.name)
                 tvDetailDate.text = dateConverter(detail.createdAt)
-                tvDetailDesc.text = getString(R.string.description, detail.description)
+                tvDetailDesc.text = detail.description
             }
         }
     }

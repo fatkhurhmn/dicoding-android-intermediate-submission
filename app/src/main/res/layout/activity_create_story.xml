@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:menu="@menu/create_menu"
-            app:title="Create your story"
+            app:title="@string/add_your_story"
             app:titleTextAppearance="@style/Text.Title.Create"
             app:titleTextColor="@color/white" />
     </com.google.android.material.appbar.AppBarLayout>
