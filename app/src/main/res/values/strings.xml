@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Story App</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login">Login</string>
     <string name="hint_email">Email address</string>
     <string name="hint_password">Password</string>
@@ -18,21 +17,21 @@
     <string name="hint_name">Name</string>
     <string name="fill_form">Fill out the form correctly</string>
     <string name="logout">Logout</string>
-    <string name="message_logout">Are yo sure want to Logout?"</string>
-    <string name="message_close">Are yo sure want to close?"</string>
+    <string name="message_logout">Are you sure want to Logout?</string>
+    <string name="message_close">Are you sure want to close?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="name">Photo by %s</string>
     <string name="desc_photo_story">photo story</string>
     <string name="something_went_wrong">Something went wrong</string>
-    <string name="add_your_story">add your story</string>
+    <string name="add_your_story">Add your story</string>
     <string name="close">Close</string>
     <string name="preview_your_image">Preview your image</string>
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
     <string name="upload">Upload</string>
-    <string name="description">~ %s</string>
+    <string name="description">Description</string>
     <string name="take_image_first">Take image first</string>
-    <string name="fill_desc">sFill the description</string>
+    <string name="fill_desc">Fill the description</string>
     <string name="date">Date</string>
 </resources>

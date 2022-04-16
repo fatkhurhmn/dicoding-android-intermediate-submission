@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Story App</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="login">Connexion</string>
+    <string name="hint_email">Adresse e-mail</string>
+    <string name="hint_password">Mot de passe</string>
+    <string name="error_name">Le nom est requis</string>
+    <string name="error_email">Le format de l\'e-mail est incorrect</string>
+    <string name="error_password">Le mot de passe doit être au moins de 6 caractères</string>
+    <string name="welcome">Bienvenue</string>
+    <string name="please_login">Veuillez vous connecter pour continuer</string>
+    <string name="dont_have_account">Vous n\'avez pas de compte ?</string>
+    <string name="have_account">Vous avez déjà un compte?</string>
+    <string name="register">S\'inscrire</string>
+    <string name="get_started">Commencer</string>
+    <string name="create_account">Créer un compte</string>
+    <string name="hint_name">Nom</string>
+    <string name="fill_form">Remplissez correctement le formulaire</string>
+    <string name="logout">Se déconnecter</string>
+    <string name="message_logout">Voulez-vous vraiment vous déconnecter ?</string>
+    <string name="message_close">Voulez-vous vraiment fermer ?</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="name">Photo par %s</string>
+    <string name="desc_photo_story">l\'histoire de la photo</string>
+    <string name="something_went_wrong">Quelque chose s\'est mal passé</string>
+    <string name="add_your_story">Ajoutez votre histoire</string>
+    <string name="close">Proche</string>
+    <string name="preview_your_image">Prévisualisez votre image</string>
+    <string name="camera">Appareil photo</string>
+    <string name="gallery">Galerie</string>
+    <string name="upload">Télécharger</string>
+    <string name="description">La description</string>
+    <string name="take_image_first">Prenez d\'abord l\'image</string>
+    <string name="fill_desc">Remplissez le descriptif</string>
+    <string name="date">Date</string>
+</resources>
