@@ -27,7 +27,7 @@ class StoryDetailActivity : AppCompatActivity() {
         with(binding) {
             if (detail != null) {
                 imgDetailPhoto.loadImage(detail.photoUrl)
-                tvDetailName.text = detail.name
+                tvDetailName.text = getString(R.string.name, detail.name)
                 tvDetailDate.text = dateConverter(detail.createdAt)
                 tvDetailDesc.text = getString(R.string.description, detail.description)
             }

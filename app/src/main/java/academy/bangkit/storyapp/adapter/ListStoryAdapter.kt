@@ -5,6 +5,7 @@ import academy.bangkit.storyapp.data.remote.response.Story
 import academy.bangkit.storyapp.databinding.StoryItemBinding
 import academy.bangkit.storyapp.utils.Extension.loadImage
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
@@ -34,21 +35,21 @@ class ListStoryAdapter : RecyclerView.Adapter<ListStoryAdapter.ListViewHolder>()
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val story = stories[position]
         holder.bind(story)
-        holder.itemView.setOnClickListener {
-            onItemClickCallback.onItemClicked(story)
-        }
     }
 
-    class ListViewHolder(private val binding: StoryItemBinding) :
+    inner class ListViewHolder(private val binding: StoryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(story: Story) {
             binding.tvStoryName.text = itemView.resources.getString(R.string.name, story.name)
             binding.imgStoryPhoto.loadImage(story.photoUrl)
+            itemView.setOnClickListener {
+                onItemClickCallback.onItemClicked(story, binding, itemView)
+            }
         }
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(story: Story)
+        fun onItemClicked(story: Story, view: StoryItemBinding, itemView: View)
     }
 }

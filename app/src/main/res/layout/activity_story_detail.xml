@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="16dp"
     tools:context=".ui.detail.StoryDetailActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,8 +15,9 @@
             android:id="@+id/img_detail_photo"
             android:layout_width="match_parent"
             android:layout_height="500dp"
-            android:background="#CFCFCF"
+            android:background="#e4e4e4"
             android:contentDescription="@string/desc_photo_story"
+            android:transitionName="photo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -27,6 +29,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/name"
             android:textSize="16sp"
+            android:transitionName="name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/img_detail_photo" />
 

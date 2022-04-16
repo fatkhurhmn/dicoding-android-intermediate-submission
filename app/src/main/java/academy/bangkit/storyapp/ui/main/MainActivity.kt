@@ -5,15 +5,19 @@ import academy.bangkit.storyapp.adapter.ListStoryAdapter
 import academy.bangkit.storyapp.data.Result
 import academy.bangkit.storyapp.data.remote.response.Story
 import academy.bangkit.storyapp.databinding.ActivityMainBinding
+import academy.bangkit.storyapp.databinding.StoryItemBinding
 import academy.bangkit.storyapp.ui.auth.AuthenticationActivity
 import academy.bangkit.storyapp.ui.create.CreateStoryActivity
 import academy.bangkit.storyapp.ui.detail.StoryDetailActivity
 import academy.bangkit.storyapp.utils.Extension.showMessage
 import academy.bangkit.storyapp.utils.SpacesItemDecoration
 import academy.bangkit.storyapp.utils.ViewModelFactory
+import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Pair
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
@@ -21,6 +25,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 
@@ -111,10 +116,15 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
     private fun actionToDetail() {
         listStoryAdapter.setOnItemClickCallback(object : ListStoryAdapter.OnItemClickCallback {
-            override fun onItemClicked(story: Story) {
+            override fun onItemClicked(story: Story, view: StoryItemBinding, itemView:View) {
+                val optionsCompat: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    itemView.context as Activity,
+                    androidx.core.util.Pair(view.imgStoryPhoto, "photo"),
+                    androidx.core.util.Pair(view.tvStoryName, "name")
+                )
                 val detailIntent = Intent(this@MainActivity, StoryDetailActivity::class.java)
                 detailIntent.putExtra(StoryDetailActivity.EXTRA_DETAIL, story)
-                startActivity(detailIntent)
+                startActivity(detailIntent, optionsCompat.toBundle())
             }
 
         })
