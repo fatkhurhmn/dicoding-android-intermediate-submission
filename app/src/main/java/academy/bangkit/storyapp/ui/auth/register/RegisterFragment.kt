@@ -5,6 +5,8 @@ import academy.bangkit.storyapp.data.Result
 import academy.bangkit.storyapp.databinding.FragmentRegisterBinding
 import academy.bangkit.storyapp.utils.Extension.showMessage
 import academy.bangkit.storyapp.utils.ViewModelFactory
+import android.animation.ObjectAnimator
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +32,24 @@ class RegisterFragment : Fragment() {
 
         moveToLogin()
         handleRegister()
+        playAnimation()
+    }
+
+    private fun playAnimation() {
+        val translation =
+            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) View.TRANSLATION_X else View.TRANSLATION_Y
+        ObjectAnimator.ofFloat(binding.imgWelcomeIllustration2, translation, -30F, 30F)
+            .apply {
+                duration = 6000
+                repeatCount = ObjectAnimator.INFINITE
+                repeatMode = ObjectAnimator.REVERSE
+            }.start()
+
+        ObjectAnimator.ofFloat(binding.imgWelcomeIllustration2, View.ALPHA, 1F, 0.7F).apply {
+            duration = 1000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }.start()
     }
 
     private fun handleRegister() {

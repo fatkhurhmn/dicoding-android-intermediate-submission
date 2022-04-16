@@ -1,10 +1,5 @@
 package academy.bangkit.storyapp.ui.auth.login
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import academy.bangkit.storyapp.R
 import academy.bangkit.storyapp.data.Result
 import academy.bangkit.storyapp.databinding.FragmentLoginBinding
@@ -12,7 +7,14 @@ import academy.bangkit.storyapp.ui.auth.register.RegisterFragment
 import academy.bangkit.storyapp.ui.main.MainActivity
 import academy.bangkit.storyapp.utils.Extension.showMessage
 import academy.bangkit.storyapp.utils.ViewModelFactory
+import android.animation.ObjectAnimator
 import android.content.Intent
+import android.content.res.Configuration
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 
@@ -38,6 +40,24 @@ class LoginFragment : Fragment() {
         loginCheck()
         moveToRegister()
         handleLogin()
+        playAnimation()
+    }
+
+    private fun playAnimation() {
+        val translation =
+            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) View.TRANSLATION_X else View.TRANSLATION_Y
+        ObjectAnimator.ofFloat(binding.imgWelcomeIllustration, translation, -30F, 30F)
+            .apply {
+                duration = 6000
+                repeatCount = ObjectAnimator.INFINITE
+                repeatMode = ObjectAnimator.REVERSE
+            }.start()
+
+        ObjectAnimator.ofFloat(binding.imgWelcomeIllustration, View.ALPHA, 1F, 0.7F).apply {
+            duration = 1000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }.start()
     }
 
     private fun loginCheck() {
