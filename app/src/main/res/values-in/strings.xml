@@ -34,4 +34,5 @@
     <string name="take_image_first">Ambil gambar dulu</string>
     <string name="fill_desc">Isi deskripsi</string>
     <string name="date">Tanggal</string>
+    <string name="close_detail">Tutup detail</string>
 </resources>

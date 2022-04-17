@@ -19,6 +19,13 @@ class StoryDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupContent()
+        closeDetail()
+    }
+
+    private fun closeDetail() {
+        binding.btnCloseDetail.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun setupContent() {
