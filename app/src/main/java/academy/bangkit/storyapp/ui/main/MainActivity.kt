@@ -31,8 +31,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var factory: ViewModelFactory
     private val listStoryAdapter: ListStoryAdapter by lazy { ListStoryAdapter() }
+    private val mainViewModel: MainViewModel by viewModels { ViewModelFactory.getInstance(this) }
 
     private val launcherCreateStoryIntent =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -49,8 +49,6 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        factory = ViewModelFactory.getInstance(this)
-
         setupToolbar()
         getListStories()
         createStory()
@@ -58,7 +56,6 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun getListStories() {
-        val mainViewModel: MainViewModel by viewModels { factory }
         val token = intent.getStringExtra(EXTRA_TOKEN)
 
         if (token != null) {
@@ -150,7 +147,6 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun showLogoutDialog() {
-        val mainViewModel: MainViewModel by viewModels { factory }
         mainViewModel.deleteSession()
 
         val alertDialogBuilder = AlertDialog.Builder(this).apply {

@@ -30,8 +30,11 @@ class CreateStoryActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener
     private lateinit var binding: ActivityCreateStoryBinding
     private lateinit var currentPhotoPath: String
     private var getFile: File? = null
-
-    private lateinit var factory: ViewModelFactory
+    private val createStoryViewModel: CreateStoryViewModel by viewModels {
+        ViewModelFactory.getInstance(
+            this
+        )
+    }
 
     private val launcherIntentCamera =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -60,8 +63,6 @@ class CreateStoryActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener
         binding = ActivityCreateStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        factory = ViewModelFactory.getInstance(this)
-
         setupToolbar()
         takeImageFromCamera()
         takeImageFromGallery()
@@ -69,7 +70,6 @@ class CreateStoryActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener
     }
 
     private fun uploadStory() {
-        val createStoryViewModel: CreateStoryViewModel by viewModels { factory }
         val token = intent.getStringExtra(MainActivity.EXTRA_TOKEN)
         binding.btnUpload.setOnClickListener {
             val description = binding.edtDescription.text.toString().trim()

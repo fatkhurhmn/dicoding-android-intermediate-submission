@@ -18,6 +18,11 @@ class RegisterFragment : Fragment() {
 
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
+    private val registerViewModel: RegisterViewModel by viewModels {
+        ViewModelFactory.getInstance(
+            requireContext()
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,9 +58,6 @@ class RegisterFragment : Fragment() {
     }
 
     private fun handleRegister() {
-        val factory: ViewModelFactory = ViewModelFactory.getInstance(requireContext())
-        val registerViewModel: RegisterViewModel by viewModels { factory }
-
         binding.btnRegister.setOnClickListener {
             val name = binding.edtRegisterName.text.toString()
             val email = binding.edtRegisterEmail.text.toString()

@@ -22,7 +22,12 @@ class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
-    private lateinit var factory: ViewModelFactory
+    private val loginViewModel: LoginViewModel by viewModels {
+        ViewModelFactory.getInstance(
+            requireContext()
+        )
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,8 +39,6 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        factory = ViewModelFactory.getInstance(requireContext())
 
         loginCheck()
         moveToRegister()
@@ -61,7 +64,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun loginCheck() {
-        val loginViewModel: LoginViewModel by viewModels { factory }
         binding.root.visibility = View.GONE
         loginViewModel.getAuthToken().observe(viewLifecycleOwner) { token ->
             if (token != "") {
@@ -73,8 +75,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun handleLogin() {
-        val loginViewModel: LoginViewModel by viewModels { factory }
-
         binding.btnLogin.setOnClickListener {
             val email = binding.edtLoginEmail.text.toString()
             val password = binding.edtLoginPassword.text.toString()
