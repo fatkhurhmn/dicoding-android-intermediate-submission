@@ -29,11 +29,11 @@
             android:layout_height="wrap_content"
             android:layout_margin="16sp"
             android:background="@drawable/bg_close"
-            android:src="@drawable/ic_close"
+            android:contentDescription="@string/close_detail"
             android:padding="4dp"
+            android:src="@drawable/ic_close"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/close_detail" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_detail_name"
@@ -56,9 +56,13 @@
         <TextView
             android:id="@+id/tv_detail_desc"
             style="@style/Text.Content"
+            android:layout_width="match_parent"
+            android:layout_marginStart="16sp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:text="@string/description"
             android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_detail_name"
             app:layout_constraintTop_toBottomOf="@id/tv_detail_date" />
 

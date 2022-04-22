@@ -43,7 +43,7 @@ class StoryDetailActivity : AppCompatActivity() {
 
     private fun dateConverter(date: String): String {
         val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
-        val formatter = SimpleDateFormat("dd MMMM yyyy, HH:mm", Locale.getDefault())
+        val formatter = SimpleDateFormat("dd MMMM yyyy | HH:mm", Locale.getDefault())
         return formatter.format(parser.parse(date) as Date)
     }
 
