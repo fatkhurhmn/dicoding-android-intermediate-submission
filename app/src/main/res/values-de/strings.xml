@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Story App</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="login">Anmeldung</string>
+    <string name="hint_email">E-Mail-Adresse</string>
+    <string name="hint_password">Passwort</string>
+    <string name="error_name">Name ist erforderlich</string>
+    <string name="error_email">E-Mail-Format ist falsch</string>
+    <string name="error_password">Passwort muss mindestens 6 Zeichen lang sein</string>
+    <string name="welcome">Herzlich willkommen</string>
+    <string name="please_login">Bitte einloggen zum Fortfahren</string>
+    <string name="dont_have_account">Sie haben kein Konto?</string>
+    <string name="have_account">Sie haben bereits ein Konto?</string>
+    <string name="register">Registrieren</string>
+    <string name="get_started">Loslegen</string>
+    <string name="create_account">Ein Konto erstellen</string>
+    <string name="hint_name">Name</string>
+    <string name="fill_form">Füllen Sie das Formular richtig aus</string>
+    <string name="logout">Ausloggen</string>
+    <string name="message_logout">Möchten Sie sich wirklich abmelden?</string>
+    <string name="message_close">Möchten Sie wirklich schließen?</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <string name="name">Foto von %s</string>
+    <string name="desc_photo_story">Foto Geschichte</string>
+    <string name="something_went_wrong">Etwas ist schief gelaufen</string>
+    <string name="add_your_story">Fügen Sie Ihre Geschichte hinzu</string>
+    <string name="close">Schließen</string>
+    <string name="preview_your_image">Vorschau Ihres Bildes</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galerie</string>
+    <string name="upload">Hochladen</string>
+    <string name="description">Beschreibung</string>
+    <string name="take_image_first">Nehmen Sie zuerst ein Bild auf</string>
+    <string name="fill_desc">Füllen Sie die Beschreibung aus</string>
+    <string name="date">Datum</string>
+    <string name="close_detail">Einzelheiten schließen</string>
+</resources>

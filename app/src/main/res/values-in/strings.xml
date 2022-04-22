@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Story App</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="login">Masuk</string>
+    <string name="hint_email">Alamat Email</string>
+    <string name="hint_password">Kata Sandi</string>
+    <string name="error_name">Nama wajib diisi</string>
+    <string name="error_email">Format email salah</string>
+    <string name="error_password">Kata sandi harus minimal 6 karakter</string>
+    <string name="welcome">Selamat Datang</string>
+    <string name="please_login">Silahkan masuk untuk melanjutkan</string>
+    <string name="dont_have_account">Belum punya akun?</string>
+    <string name="have_account">Sudah memiliki akun?</string>
+    <string name="register">Daftar</string>
+    <string name="get_started">Memulai</string>
+    <string name="create_account">Buat sebuah akun</string>
+    <string name="hint_name">Nama</string>
+    <string name="fill_form">Isi formulir dengan benar</string>
+    <string name="logout">Keluar</string>
+    <string name="message_logout">Apakah Anda yakin ingin Keluar?</string>
+    <string name="message_close">Apakah Anda yakin ingin menutup?</string>
+    <string name="yes">Iya</string>
+    <string name="no">Tidak</string>
+    <string name="name">Foto oleh %s</string>
+    <string name="desc_photo_story">Cerita foto</string>
+    <string name="something_went_wrong">Ada yang salah</string>
+    <string name="add_your_story">Tambahkan ceritamu</string>
+    <string name="close">Menutup</string>
+    <string name="preview_your_image">Pratinjau gambar Anda</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
+    <string name="upload">Unggah</string>
+    <string name="description">Deskripsi</string>
+    <string name="take_image_first">Ambil gambar dulu</string>
+    <string name="fill_desc">Isi deskripsi</string>
+    <string name="date">Tanggal</string>
+    <string name="close_detail">Tutup detail</string>
+</resources>

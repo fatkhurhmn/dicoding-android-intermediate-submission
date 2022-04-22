@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".ui.auth.login.LoginFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/img_welcome_illustration2"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_margin="16dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/welcome"
+            android:src="@drawable/welcome_illustration"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_started"
+            style="@style/Text.Title.Auth"
+            android:fontFamily="@font/opensans_semibold"
+            android:text="@string/get_started"
+            app:layout_constraintStart_toStartOf="@id/til_register_name"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_create_account"
+            style="@style/Text.Content"
+            android:text="@string/create_account"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/til_register_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_started" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_register_name"
+            style="@style/TextInputLayout"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@id/img_welcome_illustration2"
+            app:layout_constraintTop_toBottomOf="@id/tv_create_account">
+
+            <academy.bangkit.storyapp.views.NameEditText
+                android:id="@+id/edt_register_name"
+                style="@style/EditText" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_register_email"
+            style="@style/TextInputLayout"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@id/til_register_name"
+
+            app:layout_constraintTop_toBottomOf="@id/til_register_name">
+
+            <academy.bangkit.storyapp.views.EmailEditText
+                android:id="@+id/edt_register_email"
+                style="@style/EditText" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_register_password"
+            style="@style/TextInputLayout"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@id/til_register_name"
+            app:layout_constraintTop_toBottomOf="@id/til_register_email">
+
+            <academy.bangkit.storyapp.views.PasswordEditText
+                android:id="@+id/edt_register_password"
+                style="@style/EditText" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_register"
+            style="@style/Button.Auth"
+            android:layout_marginTop="8dp"
+            android:text="@string/register"
+            app:layout_constraintStart_toStartOf="@id/til_register_name"
+            app:layout_constraintTop_toBottomOf="@id/til_register_password" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/btn_register"
+            app:layout_constraintStart_toStartOf="@id/btn_register"
+            app:layout_constraintTop_toBottomOf="@id/btn_register">
+
+            <TextView
+                android:id="@+id/tv_already_account"
+                style="@style/Text.Content"
+                android:text="@string/have_account" />
+
+            <TextView
+                android:id="@+id/btn_to_login"
+                style="@style/Text.Content"
+                android:layout_marginStart="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/opensans_medium"
+                android:text="@string/login"
+                android:textColor="@color/pink_500" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_bar_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

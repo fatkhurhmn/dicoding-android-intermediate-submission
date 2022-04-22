@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    tools:context=".ui.detail.StoryDetailActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/img_detail_photo"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:background="#e4e4e4"
+            android:contentDescription="@string/desc_photo_story"
+            android:transitionName="photo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btn_close_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16sp"
+            android:background="@drawable/bg_close"
+            android:contentDescription="@string/close_detail"
+            android:padding="4dp"
+            android:src="@drawable/ic_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_detail_name"
+            style="@style/Text.Content.Main"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/name"
+            android:textSize="16sp"
+            android:transitionName="name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_detail_photo" />
+
+        <TextView
+            android:id="@+id/tv_detail_date"
+            style="@style/Text.Content"
+            android:text="@string/date"
+            app:layout_constraintStart_toStartOf="@id/tv_detail_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_name" />
+
+        <TextView
+            android:id="@+id/tv_detail_desc"
+            style="@style/Text.Content"
+            android:layout_width="match_parent"
+            android:layout_marginStart="16sp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/description"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_detail_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_date" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
