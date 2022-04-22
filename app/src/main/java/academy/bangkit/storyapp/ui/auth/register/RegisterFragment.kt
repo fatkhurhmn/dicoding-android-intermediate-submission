@@ -17,7 +17,7 @@ import androidx.fragment.app.viewModels
 class RegisterFragment : Fragment() {
 
     private var _binding: FragmentRegisterBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
     private val registerViewModel: RegisterViewModel by viewModels {
         ViewModelFactory.getInstance(
             requireContext()
@@ -27,9 +27,9 @@ class RegisterFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         _binding = FragmentRegisterBinding.inflate(layoutInflater, container, false)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,14 +43,14 @@ class RegisterFragment : Fragment() {
     private fun playAnimation() {
         val translation =
             if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) View.TRANSLATION_X else View.TRANSLATION_Y
-        ObjectAnimator.ofFloat(binding.imgWelcomeIllustration2, translation, -30F, 30F)
+        ObjectAnimator.ofFloat(binding?.imgWelcomeIllustration2, translation, -30F, 30F)
             .apply {
                 duration = 6000
                 repeatCount = ObjectAnimator.INFINITE
                 repeatMode = ObjectAnimator.REVERSE
             }.start()
 
-        ObjectAnimator.ofFloat(binding.imgWelcomeIllustration2, View.ALPHA, 1F, 0.7F).apply {
+        ObjectAnimator.ofFloat(binding?.imgWelcomeIllustration2, View.ALPHA, 1F, 0.7F).apply {
             duration = 1000
             repeatCount = ObjectAnimator.INFINITE
             repeatMode = ObjectAnimator.REVERSE
@@ -58,10 +58,10 @@ class RegisterFragment : Fragment() {
     }
 
     private fun handleRegister() {
-        binding.btnRegister.setOnClickListener {
-            val name = binding.edtRegisterName.text.toString()
-            val email = binding.edtRegisterEmail.text.toString()
-            val password = binding.edtRegisterPassword.text.toString()
+        binding?.btnRegister?.setOnClickListener {
+            val name = binding?.edtRegisterName?.text.toString()
+            val email = binding?.edtRegisterEmail?.text.toString()
+            val password = binding?.edtRegisterPassword?.text.toString()
 
             if (isFormCorrectly(name, email, password)) {
                 registerViewModel.createAccount(name, email, password)
@@ -73,7 +73,7 @@ class RegisterFragment : Fragment() {
 
                             is Result.Success -> {
                                 setupLoading(false)
-                                result.data.message.showMessage(binding.root)
+                                binding?.root?.let { view -> result.data.message.showMessage(view) }
                                 if (!result.data.error) {
                                     val mFragmentManager = parentFragmentManager
                                     mFragmentManager.popBackStack()
@@ -82,12 +82,12 @@ class RegisterFragment : Fragment() {
 
                             is Result.Error -> {
                                 setupLoading(false)
-                                result.error.showMessage(binding.root)
+                                binding?.root?.let { view -> result.error.showMessage(view) }
                             }
                         }
                     }
             } else {
-                getString(R.string.fill_form).showMessage(binding.root)
+                binding?.root?.let { view -> getString(R.string.fill_form).showMessage(view) }
             }
         }
 
@@ -100,18 +100,18 @@ class RegisterFragment : Fragment() {
     }
 
     private fun moveToLogin() {
-        binding.btnToLogin.setOnClickListener {
+        binding?.btnToLogin?.setOnClickListener {
             val mFragmentManager = parentFragmentManager
             mFragmentManager.popBackStack()
         }
     }
 
     private fun setupLoading(isLoading: Boolean) {
-        with(binding) {
+        binding?.apply {
             btnRegister.isClickable = !isLoading
             btnToLogin.isClickable = !isLoading
         }
-        binding.progressBarRegister.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding?.progressBarRegister?.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onDestroy() {

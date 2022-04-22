@@ -21,7 +21,7 @@ import androidx.fragment.app.viewModels
 class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
     private val loginViewModel: LoginViewModel by viewModels {
         ViewModelFactory.getInstance(
             requireContext()
@@ -32,9 +32,9 @@ class LoginFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,14 +49,14 @@ class LoginFragment : Fragment() {
     private fun playAnimation() {
         val translation =
             if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) View.TRANSLATION_X else View.TRANSLATION_Y
-        ObjectAnimator.ofFloat(binding.imgWelcomeIllustration, translation, -30F, 30F)
+        ObjectAnimator.ofFloat(binding?.imgWelcomeIllustration, translation, -30F, 30F)
             .apply {
                 duration = 6000
                 repeatCount = ObjectAnimator.INFINITE
                 repeatMode = ObjectAnimator.REVERSE
             }.start()
 
-        ObjectAnimator.ofFloat(binding.imgWelcomeIllustration, View.ALPHA, 1F, 0.7F).apply {
+        ObjectAnimator.ofFloat(binding?.imgWelcomeIllustration, View.ALPHA, 1F, 0.7F).apply {
             duration = 1000
             repeatCount = ObjectAnimator.INFINITE
             repeatMode = ObjectAnimator.REVERSE
@@ -64,20 +64,20 @@ class LoginFragment : Fragment() {
     }
 
     private fun loginCheck() {
-        binding.root.visibility = View.GONE
+        binding?.root?.visibility = View.GONE
         loginViewModel.getAuthToken().observe(viewLifecycleOwner) { token ->
             if (token != "") {
                 moveToMain(token)
             } else {
-                binding.root.visibility = View.VISIBLE
+                binding?.root?.visibility = View.VISIBLE
             }
         }
     }
 
     private fun handleLogin() {
-        binding.btnLogin.setOnClickListener {
-            val email = binding.edtLoginEmail.text.toString()
-            val password = binding.edtLoginPassword.text.toString()
+        binding?.btnLogin?.setOnClickListener {
+            val email = binding?.edtLoginEmail?.text.toString()
+            val password = binding?.edtLoginPassword?.text.toString()
 
             if (isFormCorrectly(email, password)) {
                 loginViewModel.loginUser(email, password).observe(viewLifecycleOwner) { result ->
@@ -97,12 +97,12 @@ class LoginFragment : Fragment() {
 
                         is Result.Error -> {
                             setupLoading(false)
-                            result.error.showMessage(binding.root)
+                            binding?.root?.let { view -> result.error.showMessage(view) }
                         }
                     }
                 }
             } else {
-                getString(R.string.fill_form).showMessage(binding.root)
+                binding?.root?.let { view -> getString(R.string.fill_form).showMessage(view) }
             }
         }
     }
@@ -113,7 +113,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun moveToRegister() {
-        binding.btnToRegister.setOnClickListener {
+        binding?.btnToRegister?.setOnClickListener {
             val mRegisterFragment = RegisterFragment()
             val mFragmentManager = parentFragmentManager
             mFragmentManager.commit {
@@ -136,11 +136,11 @@ class LoginFragment : Fragment() {
     }
 
     private fun setupLoading(isLoading: Boolean) {
-        with(binding) {
+        binding?.apply {
             btnLogin.isClickable = !isLoading
             btnToRegister.isClickable = !isLoading
         }
-        binding.progressBarLogin.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding?.progressBarLogin?.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onDestroy() {
