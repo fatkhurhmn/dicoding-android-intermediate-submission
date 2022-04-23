@@ -1,6 +1,8 @@
 package academy.bangkit.storyapp.data
 
 import academy.bangkit.storyapp.data.local.UserPreferences
+import academy.bangkit.storyapp.data.local.entity.Story
+import academy.bangkit.storyapp.data.local.room.StoryDatabase
 import academy.bangkit.storyapp.data.remote.response.*
 import academy.bangkit.storyapp.data.remote.retrofit.ApiService
 import academy.bangkit.storyapp.utils.Extension.getErrorMessage
@@ -14,7 +16,8 @@ import retrofit2.HttpException
 
 class StoryRepository private constructor(
     private val apiService: ApiService,
-    private val userPreferences: UserPreferences
+    private val userPreferences: UserPreferences,
+    private val database: StoryDatabase
 ) {
     fun createAccount(
         name: String,
@@ -63,15 +66,24 @@ class StoryRepository private constructor(
         }
 
     @OptIn(ExperimentalPagingApi::class)
-    fun getAllStories(token: String): LiveData<PagingData<StoryResponse>> {
+    fun getAllStories(token: String): LiveData<PagingData<Story>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 5
             ),
+            remoteMediator = StoryRemoteMediator(database, apiService, token),
             pagingSourceFactory = {
-                StoryPagingSource(apiService, token)
+                database.storyDao().getAllStory()
             }
         ).liveData
+//        return Pager(
+//            config = PagingConfig(
+//                pageSize = 5
+//            ),
+//            pagingSourceFactory = {
+//                StoryPagingSource(apiService, token)
+//            }
+//        ).liveData
     }
 
     fun uploadNewStory(
@@ -112,9 +124,10 @@ class StoryRepository private constructor(
         private var instance: StoryRepository? = null
         fun getInstance(
             apiService: ApiService,
-            userPreferences: UserPreferences
+            userPreferences: UserPreferences,
+            database: StoryDatabase
         ): StoryRepository = instance ?: synchronized(this) {
-            instance ?: StoryRepository(apiService, userPreferences)
+            instance ?: StoryRepository(apiService, userPreferences, database)
         }.also { instance = it }
     }
 }
