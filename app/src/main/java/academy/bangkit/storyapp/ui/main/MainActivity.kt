@@ -17,6 +17,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         setContentView(binding.root)
 
         setupToolbar()
+        showListStory()
         getListStories()
         createStory()
         actionToDetail()
@@ -57,32 +59,11 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
     private fun getListStories() {
         val token = intent.getStringExtra(EXTRA_TOKEN)
-
+        binding.rvStory.adapter = listStoryAdapter
         if (token != null) {
             mainViewModel.getAllStory("Bearer $token").observe(this) { result ->
-                when (result) {
-                    is Result.Loading -> {
-                        binding.progressBarMain.visibility = View.VISIBLE
-                    }
-
-                    is Result.Success -> {
-                        binding.progressBarMain.visibility = View.GONE
-                        val stories = result.data.storyResponses
-                        if (!result.data.error) {
-                            listStoryAdapter.submitList(stories as ArrayList<StoryResponse>)
-                            showListStory()
-                        }
-                    }
-
-                    is Result.Error -> {
-                        with(binding) {
-                            progressBarMain.visibility = View.GONE
-                            rvStory.visibility = View.GONE
-                            imgError.visibility = View.VISIBLE
-                        }
-                        result.error.showMessage(binding.root)
-                    }
-                }
+                Log.d("TES_PAGING", "getListStories: $result")
+                listStoryAdapter.submitData(lifecycle, result)
             }
         }
     }
@@ -96,8 +77,6 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 } else {
                     GridLayoutManager(this@MainActivity, 2)
                 }
-            adapter = listStoryAdapter
-            setHasFixedSize(true)
         }
     }
 
@@ -112,12 +91,17 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
     private fun actionToDetail() {
         listStoryAdapter.setOnItemClickCallback(object : ListStoryAdapter.OnItemClickCallback {
-            override fun onItemClicked(storyResponse: StoryResponse, view: StoryItemBinding, itemView:View) {
-                val optionsCompat: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                    itemView.context as Activity,
-                    androidx.core.util.Pair(view.imgStoryPhoto, "photo"),
-                    androidx.core.util.Pair(view.tvStoryName, "name")
-                )
+            override fun onItemClicked(
+                storyResponse: StoryResponse,
+                view: StoryItemBinding,
+                itemView: View
+            ) {
+                val optionsCompat: ActivityOptionsCompat =
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        itemView.context as Activity,
+                        androidx.core.util.Pair(view.imgStoryPhoto, "photo"),
+                        androidx.core.util.Pair(view.tvStoryName, "name")
+                    )
                 val detailIntent = Intent(this@MainActivity, StoryDetailActivity::class.java)
                 detailIntent.putExtra(StoryDetailActivity.EXTRA_DETAIL, storyResponse)
                 startActivity(detailIntent, optionsCompat.toBundle())
@@ -137,7 +121,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 true
             }
 
-            R.id.btn_locale->{
+            R.id.btn_locale -> {
                 val localeIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
                 startActivity(localeIntent)
                 true

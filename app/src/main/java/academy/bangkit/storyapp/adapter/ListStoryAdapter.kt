@@ -7,11 +7,11 @@ import academy.bangkit.storyapp.utils.Extension.loadImage
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-class ListStoryAdapter : ListAdapter<StoryResponse, ListStoryAdapter.ListViewHolder>(DIFF_CALLBACK) {
+class ListStoryAdapter : PagingDataAdapter<StoryResponse, ListStoryAdapter.ListViewHolder>(DIFF_CALLBACK) {
 
     private lateinit var onItemClickCallback: OnItemClickCallback
 
@@ -26,7 +26,9 @@ class ListStoryAdapter : ListAdapter<StoryResponse, ListStoryAdapter.ListViewHol
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val story = getItem(position)
-        holder.bind(story)
+        if (story != null) {
+            holder.bind(story)
+        }
     }
 
     inner class ListViewHolder(private val binding: StoryItemBinding) :
@@ -48,7 +50,7 @@ class ListStoryAdapter : ListAdapter<StoryResponse, ListStoryAdapter.ListViewHol
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<StoryResponse>() {
             override fun areItemsTheSame(oldItem: StoryResponse, newItem: StoryResponse): Boolean {
-                return oldItem === newItem
+                return oldItem == newItem
             }
 
             override fun areContentsTheSame(oldItem: StoryResponse, newItem: StoryResponse): Boolean {
