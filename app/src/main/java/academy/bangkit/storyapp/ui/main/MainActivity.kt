@@ -2,14 +2,13 @@ package academy.bangkit.storyapp.ui.main
 
 import academy.bangkit.storyapp.R
 import academy.bangkit.storyapp.adapter.ListStoryAdapter
-import academy.bangkit.storyapp.data.Result
+import academy.bangkit.storyapp.adapter.LoadingStateAdapter
 import academy.bangkit.storyapp.data.remote.response.StoryResponse
 import academy.bangkit.storyapp.databinding.ActivityMainBinding
 import academy.bangkit.storyapp.databinding.StoryItemBinding
 import academy.bangkit.storyapp.ui.auth.AuthenticationActivity
 import academy.bangkit.storyapp.ui.create.CreateStoryActivity
 import academy.bangkit.storyapp.ui.detail.StoryDetailActivity
-import academy.bangkit.storyapp.utils.Extension.showMessage
 import academy.bangkit.storyapp.utils.SpacesItemDecoration
 import academy.bangkit.storyapp.utils.ViewModelFactory
 import android.app.Activity
@@ -17,7 +16,6 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
@@ -59,10 +57,18 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
     private fun getListStories() {
         val token = intent.getStringExtra(EXTRA_TOKEN)
-        binding.rvStory.adapter = listStoryAdapter
+        with(binding) {
+            rvStory.adapter = listStoryAdapter
+            rvStory.adapter = listStoryAdapter.withLoadStateFooter(
+                footer = LoadingStateAdapter {
+                    listStoryAdapter.retry()
+                }
+            )
+        }
+
+
         if (token != null) {
             mainViewModel.getAllStory("Bearer $token").observe(this) { result ->
-                Log.d("TES_PAGING", "getListStories: $result")
                 listStoryAdapter.submitData(lifecycle, result)
             }
         }
