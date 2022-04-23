@@ -29,18 +29,16 @@
                 app:titleTextColor="@color/white" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/main_container"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_story"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_story"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:listitem="@layout/story_item" />
-        </androidx.core.widget.NestedScrollView>
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appbar_main"
+            tools:listitem="@layout/story_item" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_add_story"
@@ -49,7 +47,7 @@
             android:layout_margin="16dp"
             android:contentDescription="@string/add_your_story"
             android:src="@drawable/ic_add_story"
-            app:layout_anchor="@id/main_container"
+            app:layout_anchor="@id/rv_story"
             app:layout_anchorGravity="bottom|end"
             app:tint="@color/white" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
