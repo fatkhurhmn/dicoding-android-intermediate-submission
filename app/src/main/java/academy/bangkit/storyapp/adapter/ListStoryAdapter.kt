@@ -7,24 +7,16 @@ import academy.bangkit.storyapp.utils.Extension.loadImage
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-class ListStoryAdapter : RecyclerView.Adapter<ListStoryAdapter.ListViewHolder>() {
+class ListStoryAdapter : ListAdapter<StoryResponse, ListStoryAdapter.ListViewHolder>(DIFF_CALLBACK) {
 
-    private val stories = ArrayList<StoryResponse>()
     private lateinit var onItemClickCallback: OnItemClickCallback
-
-    fun setStories(storyResponses: ArrayList<StoryResponse>) {
-        this.stories.clear()
-        this.stories.addAll(storyResponses)
-    }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
-    }
-
-    override fun getItemCount(): Int {
-        return stories.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
@@ -33,7 +25,7 @@ class ListStoryAdapter : RecyclerView.Adapter<ListStoryAdapter.ListViewHolder>()
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val story = stories[position]
+        val story = getItem(position)
         holder.bind(story)
     }
 
@@ -51,5 +43,17 @@ class ListStoryAdapter : RecyclerView.Adapter<ListStoryAdapter.ListViewHolder>()
 
     interface OnItemClickCallback {
         fun onItemClicked(storyResponse: StoryResponse, view: StoryItemBinding, itemView: View)
+    }
+
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<StoryResponse>() {
+            override fun areItemsTheSame(oldItem: StoryResponse, newItem: StoryResponse): Boolean {
+                return oldItem === newItem
+            }
+
+            override fun areContentsTheSame(oldItem: StoryResponse, newItem: StoryResponse): Boolean {
+                return oldItem.id == newItem.id
+            }
+        }
     }
 }

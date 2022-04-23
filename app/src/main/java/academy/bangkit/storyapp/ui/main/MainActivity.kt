@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                         binding.progressBarMain.visibility = View.GONE
                         val stories = result.data.storyResponses
                         if (!result.data.error) {
-                            listStoryAdapter.setStories(stories as ArrayList<StoryResponse>)
+                            listStoryAdapter.submitList(stories as ArrayList<StoryResponse>)
                             showListStory()
                         }
                     }
