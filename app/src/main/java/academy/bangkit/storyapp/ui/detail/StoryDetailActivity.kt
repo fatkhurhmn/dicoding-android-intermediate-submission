@@ -1,7 +1,7 @@
 package academy.bangkit.storyapp.ui.detail
 
 import academy.bangkit.storyapp.R
-import academy.bangkit.storyapp.data.remote.response.StoryResponse
+import academy.bangkit.storyapp.data.local.entity.Story
 import academy.bangkit.storyapp.databinding.ActivityStoryDetailBinding
 import academy.bangkit.storyapp.utils.Extension.loadImage
 import android.os.Bundle
@@ -29,7 +29,7 @@ class StoryDetailActivity : AppCompatActivity() {
     }
 
     private fun setupContent() {
-        val detail = intent.getParcelableExtra<StoryResponse>(EXTRA_DETAIL)
+        val detail = intent.getParcelableExtra<Story>(EXTRA_DETAIL)
 
         with(binding) {
             if (detail != null) {

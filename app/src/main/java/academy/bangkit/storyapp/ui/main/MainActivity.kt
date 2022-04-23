@@ -3,7 +3,7 @@ package academy.bangkit.storyapp.ui.main
 import academy.bangkit.storyapp.R
 import academy.bangkit.storyapp.adapter.ListStoryAdapter
 import academy.bangkit.storyapp.adapter.LoadingStateAdapter
-import academy.bangkit.storyapp.data.remote.response.StoryResponse
+import academy.bangkit.storyapp.data.local.entity.Story
 import academy.bangkit.storyapp.databinding.ActivityMainBinding
 import academy.bangkit.storyapp.databinding.StoryItemBinding
 import academy.bangkit.storyapp.ui.auth.AuthenticationActivity
@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     private fun actionToDetail() {
         listStoryAdapter.setOnItemClickCallback(object : ListStoryAdapter.OnItemClickCallback {
             override fun onItemClicked(
-                storyResponse: StoryResponse,
+                story: Story,
                 view: StoryItemBinding,
                 itemView: View
             ) {
@@ -129,10 +129,9 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                         androidx.core.util.Pair(view.tvStoryName, "name")
                     )
                 val detailIntent = Intent(this@MainActivity, StoryDetailActivity::class.java)
-                detailIntent.putExtra(StoryDetailActivity.EXTRA_DETAIL, storyResponse)
+                detailIntent.putExtra(StoryDetailActivity.EXTRA_DETAIL, story)
                 startActivity(detailIntent, optionsCompat.toBundle())
             }
-
         })
     }
 
