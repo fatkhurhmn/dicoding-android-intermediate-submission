@@ -3,7 +3,7 @@ package academy.bangkit.storyapp.ui.main
 import academy.bangkit.storyapp.R
 import academy.bangkit.storyapp.adapter.ListStoryAdapter
 import academy.bangkit.storyapp.data.Result
-import academy.bangkit.storyapp.data.remote.response.Story
+import academy.bangkit.storyapp.data.remote.response.StoryResponse
 import academy.bangkit.storyapp.databinding.ActivityMainBinding
 import academy.bangkit.storyapp.databinding.StoryItemBinding
 import academy.bangkit.storyapp.ui.auth.AuthenticationActivity
@@ -67,9 +67,9 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
                     is Result.Success -> {
                         binding.progressBarMain.visibility = View.GONE
-                        val stories = result.data.stories
+                        val stories = result.data.storyResponses
                         if (!result.data.error) {
-                            listStoryAdapter.setStories(stories as ArrayList<Story>)
+                            listStoryAdapter.setStories(stories as ArrayList<StoryResponse>)
                             showListStory()
                         }
                     }
@@ -112,14 +112,14 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
     private fun actionToDetail() {
         listStoryAdapter.setOnItemClickCallback(object : ListStoryAdapter.OnItemClickCallback {
-            override fun onItemClicked(story: Story, view: StoryItemBinding, itemView:View) {
+            override fun onItemClicked(storyResponse: StoryResponse, view: StoryItemBinding, itemView:View) {
                 val optionsCompat: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
                     itemView.context as Activity,
                     androidx.core.util.Pair(view.imgStoryPhoto, "photo"),
                     androidx.core.util.Pair(view.tvStoryName, "name")
                 )
                 val detailIntent = Intent(this@MainActivity, StoryDetailActivity::class.java)
-                detailIntent.putExtra(StoryDetailActivity.EXTRA_DETAIL, story)
+                detailIntent.putExtra(StoryDetailActivity.EXTRA_DETAIL, storyResponse)
                 startActivity(detailIntent, optionsCompat.toBundle())
             }
 

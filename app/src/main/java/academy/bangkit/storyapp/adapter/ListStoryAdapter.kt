@@ -1,7 +1,7 @@
 package academy.bangkit.storyapp.adapter
 
 import academy.bangkit.storyapp.R
-import academy.bangkit.storyapp.data.remote.response.Story
+import academy.bangkit.storyapp.data.remote.response.StoryResponse
 import academy.bangkit.storyapp.databinding.StoryItemBinding
 import academy.bangkit.storyapp.utils.Extension.loadImage
 import android.view.LayoutInflater
@@ -11,12 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 
 class ListStoryAdapter : RecyclerView.Adapter<ListStoryAdapter.ListViewHolder>() {
 
-    private val stories = ArrayList<Story>()
+    private val stories = ArrayList<StoryResponse>()
     private lateinit var onItemClickCallback: OnItemClickCallback
 
-    fun setStories(stories: ArrayList<Story>) {
+    fun setStories(storyResponses: ArrayList<StoryResponse>) {
         this.stories.clear()
-        this.stories.addAll(stories)
+        this.stories.addAll(storyResponses)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
@@ -40,16 +40,16 @@ class ListStoryAdapter : RecyclerView.Adapter<ListStoryAdapter.ListViewHolder>()
     inner class ListViewHolder(private val binding: StoryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(story: Story) {
-            binding.tvStoryName.text = itemView.resources.getString(R.string.name, story.name)
-            binding.imgStoryPhoto.loadImage(story.photoUrl)
+        fun bind(storyResponse: StoryResponse) {
+            binding.tvStoryName.text = itemView.resources.getString(R.string.name, storyResponse.name)
+            binding.imgStoryPhoto.loadImage(storyResponse.photoUrl)
             itemView.setOnClickListener {
-                onItemClickCallback.onItemClicked(story, binding, itemView)
+                onItemClickCallback.onItemClicked(storyResponse, binding, itemView)
             }
         }
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(story: Story, view: StoryItemBinding, itemView: View)
+        fun onItemClicked(storyResponse: StoryResponse, view: StoryItemBinding, itemView: View)
     }
 }
