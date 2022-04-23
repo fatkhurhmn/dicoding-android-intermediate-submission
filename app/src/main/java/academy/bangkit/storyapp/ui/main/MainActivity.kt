@@ -9,6 +9,7 @@ import academy.bangkit.storyapp.databinding.StoryItemBinding
 import academy.bangkit.storyapp.ui.auth.AuthenticationActivity
 import academy.bangkit.storyapp.ui.create.CreateStoryActivity
 import academy.bangkit.storyapp.ui.detail.StoryDetailActivity
+import academy.bangkit.storyapp.utils.Extension.showMessage
 import academy.bangkit.storyapp.utils.SpacesItemDecoration
 import academy.bangkit.storyapp.utils.ViewModelFactory
 import android.app.Activity
@@ -24,6 +25,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityOptionsCompat
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 
@@ -49,24 +51,34 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         setContentView(binding.root)
 
         setupToolbar()
+        loadingStateHandling()
         showListStory()
         getListStories()
         createStory()
         actionToDetail()
     }
 
+    private fun loadingStateHandling() {
+        listStoryAdapter.addLoadStateListener { loadSate ->
+            when (loadSate.source.refresh) {
+                is LoadState.Loading -> {
+                    binding.progressBarMain.visibility = View.VISIBLE
+                }
+
+                is LoadState.NotLoading -> {
+                    binding.progressBarMain.visibility = View.GONE
+                }
+
+                is LoadState.Error -> {
+                    binding.imgError.visibility = View.VISIBLE
+                    loadSate.toString().showMessage(binding.root)
+                }
+            }
+        }
+    }
+
     private fun getListStories() {
         val token = intent.getStringExtra(EXTRA_TOKEN)
-        with(binding) {
-            rvStory.adapter = listStoryAdapter
-            rvStory.adapter = listStoryAdapter.withLoadStateFooter(
-                footer = LoadingStateAdapter {
-                    listStoryAdapter.retry()
-                }
-            )
-        }
-
-
         if (token != null) {
             mainViewModel.getAllStory("Bearer $token").observe(this) { result ->
                 listStoryAdapter.submitData(lifecycle, result)
@@ -77,12 +89,20 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     private fun showListStory() {
         with(binding.rvStory) {
             addItemDecoration(SpacesItemDecoration(16))
+
             layoutManager =
                 if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                     LinearLayoutManager(this@MainActivity)
                 } else {
                     GridLayoutManager(this@MainActivity, 2)
                 }
+
+            adapter = listStoryAdapter
+            adapter = listStoryAdapter.withLoadStateFooter(
+                footer = LoadingStateAdapter {
+                    listStoryAdapter.retry()
+                }
+            )
         }
     }
 
