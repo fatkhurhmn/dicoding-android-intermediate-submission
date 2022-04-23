@@ -62,27 +62,6 @@ class StoryRepository private constructor(
             }
         }
 
-//    fun getAllStories(token: String): LiveData<Result<ListStoryResponse>> =
-//        liveData {
-//            emit(Result.Loading)
-//            try {
-//                val response = apiService.getAllStories(token)
-//                emit(Result.Success(response))
-//            } catch (e: Exception) {
-//                when (e) {
-//                    is HttpException -> {
-//                        val message = e.getErrorMessage()
-//                        if (message != null) {
-//                            emit(Result.Error(message))
-//                        }
-//                    }
-//                    else -> {
-//                        emit(Result.Error(e.message.toString()))
-//                    }
-//                }
-//            }
-//        }
-
     @OptIn(ExperimentalPagingApi::class)
     fun getAllStories(token: String): LiveData<PagingData<StoryResponse>> {
         return Pager(
