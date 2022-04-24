@@ -1,49 +1,24 @@
 package academy.bangkit.storyapp.ui.main
 
 import academy.bangkit.storyapp.R
-import academy.bangkit.storyapp.adapter.ListStoryAdapter
-import academy.bangkit.storyapp.adapter.LoadingStateAdapter
-import academy.bangkit.storyapp.data.local.entity.Story
 import academy.bangkit.storyapp.databinding.ActivityMainBinding
-import academy.bangkit.storyapp.databinding.StoryItemBinding
 import academy.bangkit.storyapp.ui.auth.AuthenticationActivity
-import academy.bangkit.storyapp.ui.create.CreateStoryActivity
-import academy.bangkit.storyapp.ui.detail.StoryDetailActivity
-import academy.bangkit.storyapp.utils.Extension.showMessage
-import academy.bangkit.storyapp.utils.SpacesItemDecoration
+import academy.bangkit.storyapp.ui.main.home.HomeFragment
 import academy.bangkit.storyapp.utils.ViewModelFactory
-import android.app.Activity
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.provider.Settings
 import android.view.MenuItem
-import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.app.ActivityOptionsCompat
-import androidx.paging.LoadState
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.commit
 
 class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
     private lateinit var binding: ActivityMainBinding
-    private val listStoryAdapter: ListStoryAdapter by lazy { ListStoryAdapter() }
     private val mainViewModel: MainViewModel by viewModels { ViewModelFactory.getInstance(this) }
-
-    private val launcherCreateStoryIntent =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == RESULT_CREATE && it.data != null) {
-                val isError = it.data!!.getBooleanExtra(EXTRA_ERROR, true)
-                if (!isError) {
-                    getListStories()
-                }
-            }
-        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,92 +26,28 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         setContentView(binding.root)
 
         setupToolbar()
-        loadingStateHandling()
-        showListStory()
-        getListStories()
-        createStory()
-        actionToDetail()
+        setupFragment()
     }
 
-    private fun loadingStateHandling() {
-        listStoryAdapter.addLoadStateListener { loadSate ->
-            when (loadSate.source.refresh) {
-                is LoadState.Loading -> {
-                    binding.progressBarMain.visibility = View.VISIBLE
-                }
-
-                is LoadState.NotLoading -> {
-                    binding.progressBarMain.visibility = View.GONE
-                }
-
-                is LoadState.Error -> {
-                    binding.imgError.visibility = View.VISIBLE
-                    loadSate.toString().showMessage(binding.root)
-                }
-            }
-        }
-    }
-
-    private fun getListStories() {
-        val token = intent.getStringExtra(EXTRA_TOKEN)
-        if (token != null) {
-            mainViewModel.getAllStory("Bearer $token").observe(this) { result ->
-                listStoryAdapter.submitData(lifecycle, result)
-            }
-        }
-    }
-
-    private fun showListStory() {
-        with(binding.rvStory) {
-            addItemDecoration(SpacesItemDecoration(16))
-
-            layoutManager =
-                if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    LinearLayoutManager(this@MainActivity)
-                } else {
-                    GridLayoutManager(this@MainActivity, 2)
-                }
-
-            adapter = listStoryAdapter
-            adapter = listStoryAdapter.withLoadStateFooter(
-                footer = LoadingStateAdapter {
-                    listStoryAdapter.retry()
-                }
-            )
-        }
-    }
-
-    private fun createStory() {
-        val token = intent.getStringExtra(EXTRA_TOKEN)
-        binding.fabAddStory.setOnClickListener {
-            val createStoryIntent = Intent(this, CreateStoryActivity::class.java)
-            createStoryIntent.putExtra(EXTRA_TOKEN, token)
-            launcherCreateStoryIntent.launch(createStoryIntent)
-        }
-    }
-
-    private fun actionToDetail() {
-        listStoryAdapter.setOnItemClickCallback(object : ListStoryAdapter.OnItemClickCallback {
-            override fun onItemClicked(
-                story: Story,
-                view: StoryItemBinding,
-                itemView: View
-            ) {
-                val optionsCompat: ActivityOptionsCompat =
-                    ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        itemView.context as Activity,
-                        androidx.core.util.Pair(view.imgStoryPhoto, "photo"),
-                        androidx.core.util.Pair(view.tvStoryName, "name")
-                    )
-                val detailIntent = Intent(this@MainActivity, StoryDetailActivity::class.java)
-                detailIntent.putExtra(StoryDetailActivity.EXTRA_DETAIL, story)
-                startActivity(detailIntent, optionsCompat.toBundle())
-            }
-        })
+    fun getToken(): String? {
+        return intent.getStringExtra(EXTRA_TOKEN)
     }
 
     private fun setupToolbar() {
         binding.toolbarMain.setOnMenuItemClickListener(this)
+    }
+
+
+    private fun setupFragment() {
+        val mFragmentManager = supportFragmentManager
+        val mHomeFragment = HomeFragment()
+        val fragment = mFragmentManager.findFragmentByTag(HomeFragment::class.java.simpleName)
+
+        if (fragment !is HomeFragment) {
+            mFragmentManager.commit {
+                add(R.id.main_container, mHomeFragment, HomeFragment::class.java.simpleName)
+            }
+        }
     }
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
