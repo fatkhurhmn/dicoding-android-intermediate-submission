@@ -4,6 +4,7 @@ import academy.bangkit.storyapp.R
 import academy.bangkit.storyapp.databinding.ActivityMainBinding
 import academy.bangkit.storyapp.ui.auth.AuthenticationActivity
 import academy.bangkit.storyapp.ui.main.home.HomeFragment
+import academy.bangkit.storyapp.ui.main.maps.MapsFragment
 import academy.bangkit.storyapp.utils.ViewModelFactory
 import android.content.Intent
 import android.os.Bundle
@@ -62,6 +63,29 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 startActivity(localeIntent)
                 true
             }
+
+            R.id.btn_map -> {
+                val mFragment = supportFragmentManager
+                val size = mFragment.backStackEntryCount
+
+                if (size > 0) {
+                    item.setIcon(R.drawable.ic_map)
+                    mFragment.popBackStack()
+                } else {
+                    val mMapFragment = MapsFragment()
+                    mFragment.commit {
+                        addToBackStack(null)
+                        replace(
+                            R.id.main_container,
+                            mMapFragment,
+                            MapsFragment::class.java.simpleName
+                        )
+                    }
+                    item.setIcon(R.drawable.ic_list)
+                }
+                true
+            }
+
             else -> false
         }
     }
