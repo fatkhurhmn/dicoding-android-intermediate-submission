@@ -78,6 +78,26 @@ class StoryRepository private constructor(
         ).liveData
     }
 
+    fun getAllStoryWithLocation(token: String): LiveData<Result<ListStoryResponse>> =
+        liveData {
+            emit(Result.Loading)
+            try {
+                val response = apiService.getAllStories(token = token, location = 1)
+                emit(Result.Success(response))
+            } catch (e: Exception) {
+                when (e) {
+                    is HttpException -> {
+                        val message = e.getErrorMessage()
+                        if (message != null) {
+                            emit(Result.Error(message))
+                        }
+                    }
+                    else -> {
+                        emit(Result.Error(e.message.toString()))
+                    }
+                }
+            }
+        }
 
     fun uploadNewStory(
         token: String,
