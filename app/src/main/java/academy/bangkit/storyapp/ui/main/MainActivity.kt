@@ -67,13 +67,12 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun showLogoutDialog() {
-        mainViewModel.deleteSession()
-
         val alertDialogBuilder = AlertDialog.Builder(this).apply {
             setTitle(getString(R.string.logout))
             setMessage(getString(R.string.message_logout))
             setCancelable(false)
             setPositiveButton(getString(R.string.yes)) { _, _ ->
+                mainViewModel.deleteSession()
                 val authIntent = Intent(this@MainActivity, AuthenticationActivity::class.java)
                 startActivity(authIntent)
                 finish()
