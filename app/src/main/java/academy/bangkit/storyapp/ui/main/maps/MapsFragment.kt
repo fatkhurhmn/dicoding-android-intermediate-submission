@@ -9,7 +9,6 @@ import academy.bangkit.storyapp.utils.Extension.showMessage
 import academy.bangkit.storyapp.utils.ViewModelFactory
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,7 +27,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import java.net.URL
 
 class MapsFragment : Fragment() {
 

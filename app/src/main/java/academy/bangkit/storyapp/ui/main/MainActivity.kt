@@ -69,8 +69,8 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 val size = mFragment.backStackEntryCount
 
                 if (size > 0) {
-                    item.setIcon(R.drawable.ic_map)
                     mFragment.popBackStack()
+                    item.setIcon(R.drawable.ic_map)
                 } else {
                     val mMapFragment = MapsFragment()
                     mFragment.commit {
@@ -88,6 +88,11 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
             else -> false
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        binding.toolbarMain.menu.getItem(0).setIcon(R.drawable.ic_map)
     }
 
     private fun showLogoutDialog() {
