@@ -66,7 +66,7 @@ class StoryRepository private constructor(
         }
 
     @OptIn(ExperimentalPagingApi::class)
-    fun getAllStories(token: String): LiveData<PagingData<Story>> {
+    fun getAllStory(token: String): LiveData<PagingData<Story>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 5
@@ -76,15 +76,8 @@ class StoryRepository private constructor(
                 database.storyDao().getAllStory()
             }
         ).liveData
-//        return Pager(
-//            config = PagingConfig(
-//                pageSize = 5
-//            ),
-//            pagingSourceFactory = {
-//                StoryPagingSource(apiService, token)
-//            }
-//        ).liveData
     }
+
 
     fun uploadNewStory(
         token: String,

@@ -7,5 +7,5 @@ import androidx.paging.cachedIn
 
 class HomeViewModel(private val storyRepository: StoryRepository) : ViewModel() {
     fun getAllStory(token: String) =
-        storyRepository.getAllStories(token).cachedIn(viewModelScope)
+        storyRepository.getAllStory(token).cachedIn(viewModelScope)
 }
