@@ -36,4 +36,8 @@
     <string name="date">Date</string>
     <string name="close_detail">close detail</string>
     <string name="retry">Try again</string>
+    <string name="change_language">Language</string>
+    <string name="maps">Maps</string>
+    <string name="location_not_found">Location is not found. Try Again</string>
+    <string name="my_location">My Location</string>
 </resources>

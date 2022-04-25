@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -61,6 +62,7 @@ dependencies {
     //room
     implementation 'androidx.room:room-paging:2.5.0-alpha01'
     implementation 'androidx.room:room-ktx:2.5.0-alpha01'
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
     kapt 'androidx.room:room-compiler:2.5.0-alpha01'
 
     //lifecycle component
@@ -68,6 +70,10 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
 
     implementation "com.github.bumptech.glide:glide:4.13.1"
+
+    //gms
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
 
     //testing
     testImplementation 'junit:junit:4.13.2'
