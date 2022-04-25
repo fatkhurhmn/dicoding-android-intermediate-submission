@@ -2,6 +2,12 @@ package academy.bangkit.storyapp.utils
 
 import academy.bangkit.storyapp.data.local.entity.Story
 import academy.bangkit.storyapp.data.remote.response.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 
 object DataDummy {
     fun generateDummyLoginResponse(): LoginResponse {
@@ -59,6 +65,25 @@ object DataDummy {
             error = false,
             message = "Stories fetched successfully",
             stories = items
+        )
+    }
+
+    fun generateDummyImageMultipart(): MultipartBody.Part {
+        val myFile = File("image")
+        val requestImageFile = myFile.asRequestBody("image/jpeg".toMediaType())
+        return MultipartBody.Part.createFormData(
+            "img", myFile.name, requestImageFile
+        )
+    }
+
+    fun generateDummyRequestBody(string: String): RequestBody {
+        return string.toRequestBody("text/plain".toMediaType())
+    }
+
+    fun generateDummyFilUploadResponse():FileUploadResponse{
+        return FileUploadResponse(
+            error = false,
+            message = "success"
         )
     }
 }
