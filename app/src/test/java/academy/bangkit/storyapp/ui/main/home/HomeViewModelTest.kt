@@ -37,7 +37,7 @@ class HomeViewModelTest {
     var mainCoroutineRule = MainCoroutineRule()
 
     @Test
-    fun `when Get Quote Should Not Null`() = runTest {
+    fun `when get story should not null`() = runTest {
         val dummyStory = DataDummy.generateDummyStoryResponse()
         val data = PagedTestDataSources.snapshot(dummyStory)
         val story = MutableLiveData<PagingData<Story>>()
