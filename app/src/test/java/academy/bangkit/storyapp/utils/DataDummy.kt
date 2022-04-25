@@ -2,6 +2,7 @@ package academy.bangkit.storyapp.utils
 
 import academy.bangkit.storyapp.data.remote.response.LoginResponse
 import academy.bangkit.storyapp.data.remote.response.LoginResult
+import academy.bangkit.storyapp.data.remote.response.RegisterResponse
 
 object DataDummy {
     fun generateDummyLoginResponse(): LoginResponse {
@@ -14,6 +15,13 @@ object DataDummy {
             error = false,
             message = "success",
             loginResult = loginResult
+        )
+    }
+
+    fun generateDummyRegisterResponse(): RegisterResponse {
+        return RegisterResponse(
+            error = false,
+            message = "User Created"
         )
     }
 }
