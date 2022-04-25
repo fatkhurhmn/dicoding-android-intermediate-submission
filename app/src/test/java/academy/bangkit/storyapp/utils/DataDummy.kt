@@ -1,9 +1,7 @@
 package academy.bangkit.storyapp.utils
 
 import academy.bangkit.storyapp.data.local.entity.Story
-import academy.bangkit.storyapp.data.remote.response.LoginResponse
-import academy.bangkit.storyapp.data.remote.response.LoginResult
-import academy.bangkit.storyapp.data.remote.response.RegisterResponse
+import academy.bangkit.storyapp.data.remote.response.*
 
 object DataDummy {
     fun generateDummyLoginResponse(): LoginResponse {
@@ -26,7 +24,7 @@ object DataDummy {
         )
     }
 
-    fun generateDummyStoryResponse(): List<Story> {
+    fun generateDummyStory(): List<Story> {
         val items: MutableList<Story> = arrayListOf()
         for (i in 0..100) {
             val story = Story(
@@ -41,5 +39,26 @@ object DataDummy {
             items.add(story)
         }
         return items
+    }
+
+    fun generateDummyStoryResponse(): ListStoryResponse {
+        val items: MutableList<StoryResponse> = arrayListOf()
+        for (i in 0..100) {
+            val story = StoryResponse(
+                id = "$i",
+                name = "user $i",
+                description = "desc $i",
+                photoUrl = "photo $i",
+                createdAt = "date $i",
+                lat = i.toDouble(),
+                lon = i.toDouble()
+            )
+            items.add(story)
+        }
+        return ListStoryResponse(
+            error = false,
+            message = "Stories fetched successfully",
+            stories = items
+        )
     }
 }

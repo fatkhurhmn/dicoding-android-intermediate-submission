@@ -38,7 +38,7 @@ class HomeViewModelTest {
 
     @Test
     fun `when get story should not null`() = runTest {
-        val dummyStory = DataDummy.generateDummyStoryResponse()
+        val dummyStory = DataDummy.generateDummyStory()
         val data = PagedTestDataSources.snapshot(dummyStory)
         val story = MutableLiveData<PagingData<Story>>()
         story.value = data
