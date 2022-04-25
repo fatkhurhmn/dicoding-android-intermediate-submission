@@ -40,4 +40,7 @@
     <string name="maps">Maps</string>
     <string name="location_not_found">Location is not found. Try Again</string>
     <string name="my_location">My Location</string>
+    <string name="share_my_location">Share my location</string>
+    <string name="success_get_current_location">Success to get current location</string>
+    <string name="failed_get_current_location">Failed to get current location. Try again</string>
 </resources>

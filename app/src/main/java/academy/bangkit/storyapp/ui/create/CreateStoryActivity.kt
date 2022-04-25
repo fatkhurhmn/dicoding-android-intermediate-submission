@@ -8,7 +8,9 @@ import academy.bangkit.storyapp.utils.Extension.showMessage
 import academy.bangkit.storyapp.utils.MediaHelper
 import academy.bangkit.storyapp.utils.MediaHelper.uriToFile
 import academy.bangkit.storyapp.utils.ViewModelFactory
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
@@ -20,8 +22,12 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 
@@ -30,11 +36,21 @@ class CreateStoryActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener
     private lateinit var binding: ActivityCreateStoryBinding
     private lateinit var currentPhotoPath: String
     private var getFile: File? = null
+    private var latitude: RequestBody? = null
+    private var longitude: RequestBody? = null
     private val createStoryViewModel: CreateStoryViewModel by viewModels {
         ViewModelFactory.getInstance(
             this
         )
     }
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it) {
+                getCurrentLocation()
+            }
+        }
 
     private val launcherIntentCamera =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -67,6 +83,44 @@ class CreateStoryActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener
         takeImageFromCamera()
         takeImageFromGallery()
         uploadStory()
+        setLocation()
+    }
+
+    private fun setLocation() {
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        binding.switchLocation.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                setupLoading(true)
+                getCurrentLocation()
+            }else{
+                latitude = null
+                longitude = null
+            }
+        }
+    }
+
+    private fun getCurrentLocation() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
+                setupLoading(false)
+                if (location != null) {
+                    latitude =
+                        location.latitude.toString().toRequestBody("text/plain".toMediaType())
+                    longitude =
+                        location.longitude.toString().toRequestBody("text/plain".toMediaType())
+                    getString(R.string.success_get_current_location).showMessage(binding.root)
+                } else {
+                    binding.switchLocation.isChecked = false
+                    getString(R.string.failed_get_current_location).showMessage(binding.root)
+                }
+            }
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
     }
 
     private fun uploadStory() {
@@ -79,11 +133,18 @@ class CreateStoryActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener
             } else if (description.isEmpty()) {
                 getString(R.string.fill_desc).showMessage(binding.root)
             } else {
+
                 val desc = description.toRequestBody("text/plain".toMediaType())
                 val file = MediaHelper.reduceFileImage(getFile as File)
                 val imageMultipart = MediaHelper.fileToImageMultipart(file)
                 if (token != null) {
-                    createStoryViewModel.uploadNewStory(token, imageMultipart, desc)
+                    createStoryViewModel.uploadNewStory(
+                        token,
+                        imageMultipart,
+                        desc,
+                        latitude,
+                        longitude
+                    )
                         .observe(this) { result ->
                             when (result) {
                                 is Result.Loading -> {
