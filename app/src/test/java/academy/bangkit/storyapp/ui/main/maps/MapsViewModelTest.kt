@@ -54,4 +54,17 @@ class MapsViewModelTest {
         assertTrue(actualResult is Result.Success)
         assertEquals(dummyStory.stories.size, (actualResult as Result.Success).data.stories.size)
     }
+
+    @Test
+    fun `when get all story failed return Result Error`() {
+        val expectedResult: LiveData<Result<ListStoryResponse>> = liveData {
+            emit(Result.Error(dummyStory.message))
+        }
+
+        `when`(mapsViewModel.getAllStoryWithLocation(dummyToken)).thenReturn(expectedResult)
+
+        val actualResult = mapsViewModel.getAllStoryWithLocation(dummyToken).getOrAwaitValue()
+        Mockito.verify(storyRepository).getAllStoryWithLocation(dummyToken)
+        assertTrue(actualResult is Result.Error)
+    }
 }
