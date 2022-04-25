@@ -31,7 +31,7 @@ class HomeViewModelTest {
 
     @Mock
     private lateinit var homeViewModel: HomeViewModel
-    private val dummyToken = "asdfdsfdsaf"
+    private val dummyToken = "randomDummyToken"
 
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()

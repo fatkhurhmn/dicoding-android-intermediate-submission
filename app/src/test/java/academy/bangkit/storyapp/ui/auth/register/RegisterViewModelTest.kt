@@ -31,8 +31,8 @@ class RegisterViewModelTest {
     private lateinit var storyRepository: StoryRepository
     private lateinit var registerViewModel: RegisterViewModel
     private var dummyRegisterResponse = DataDummy.generateDummyRegisterResponse()
-    private var dummyName = "fatkhu"
-    private var dummyEmail = "fatkhu@gmail.com"
+    private var dummyName = "myName"
+    private var dummyEmail = "myemail@gmail.com"
     private var dummyPassword = "123123"
 
     @Before

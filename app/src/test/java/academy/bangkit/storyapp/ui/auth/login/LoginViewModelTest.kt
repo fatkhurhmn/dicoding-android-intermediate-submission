@@ -32,9 +32,9 @@ class LoginViewModelTest {
     private lateinit var storyRepository: StoryRepository
     private lateinit var loginViewModel: LoginViewModel
     private var dummyLoginResponse = DataDummy.generateDummyLoginResponse()
-    private var dummyEmail = "afaizin@gmail.com"
+    private var dummyEmail = "myemail@gmail.com"
     private var dummyPassword = "123123"
-    private var dummyToken = "asdfghjjkladsfjkl"
+    private var dummyToken = "randomDummyToken"
 
     @Before
     fun setUp() {
