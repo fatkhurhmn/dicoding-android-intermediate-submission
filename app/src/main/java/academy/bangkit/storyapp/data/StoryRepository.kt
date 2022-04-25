@@ -102,12 +102,14 @@ class StoryRepository private constructor(
     fun uploadNewStory(
         token: String,
         image: MultipartBody.Part,
-        description: RequestBody
+        description: RequestBody,
+        lat: RequestBody?,
+        lon: RequestBody?
     ): LiveData<Result<FileUploadResponse>> =
         liveData {
             emit(Result.Loading)
             try {
-                val response = apiService.uploadNewStory(token, image, description)
+                val response = apiService.uploadNewStory(token, image, description, lat, lon)
                 emit(Result.Success(response))
             } catch (e: Exception) {
                 when (e) {
