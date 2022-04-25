@@ -7,6 +7,7 @@ import academy.bangkit.storyapp.databinding.FragmentMapsBinding
 import academy.bangkit.storyapp.ui.main.MainActivity
 import academy.bangkit.storyapp.utils.Extension.showMessage
 import academy.bangkit.storyapp.utils.ViewModelFactory
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsFragment : Fragment() {
@@ -45,6 +47,7 @@ class MapsFragment : Fragment() {
 
         setStartLocation()
         getAllStory()
+        setMapStyle()
     }
 
     override fun onCreateView(
@@ -109,6 +112,19 @@ class MapsFragment : Fragment() {
                         .snippet(data.description)
                 )
             }
+        }
+    }
+
+    private fun setMapStyle() {
+        try {
+            mMap.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                    requireContext(),
+                    R.raw.map_style
+                )
+            )
+        } catch (exception: Resources.NotFoundException) {
+            exception.printStackTrace()
         }
     }
 
