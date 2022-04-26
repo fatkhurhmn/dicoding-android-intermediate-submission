@@ -52,7 +52,6 @@ class CreateStoryViewModelTest {
             emit(Result.Success(dummyFileUploadResponse))
         }
 
-
         `when`(
             createStoryViewModel.uploadNewStory(
                 token = dummyToken,
