@@ -33,6 +33,7 @@
             android:contentDescription="@string/add_your_story"
             android:src="@drawable/ic_add_story"
             app:layout_anchor="@id/rv_story"
+            android:theme="@style/Theme.StoryAppLight"
             app:layout_anchorGravity="bottom|end"
             app:tint="@color/white" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

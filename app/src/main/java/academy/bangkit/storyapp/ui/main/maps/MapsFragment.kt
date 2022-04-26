@@ -74,7 +74,7 @@ class MapsFragment : Fragment() {
     }
 
     private fun getAllStory() {
-        val token = (activity as MainActivity).getToken()
+        val token = arguments?.getString(MainActivity.EXTRA_TOKEN)
         if (token != null) {
             mapsViewModel.getAllStoryWithLocation("Bearer $token")
                 .observe(viewLifecycleOwner) { result ->

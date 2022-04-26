@@ -30,18 +30,20 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         setupFragment()
     }
 
-    fun getToken(): String? {
-        return intent.getStringExtra(EXTRA_TOKEN)
-    }
-
     private fun setupToolbar() {
         binding.toolbarMain.setOnMenuItemClickListener(this)
     }
 
 
     private fun setupFragment() {
+        val token = intent.getStringExtra(EXTRA_TOKEN)
+        val bundle = Bundle()
+        bundle.putString(EXTRA_TOKEN, token)
+
         val mFragmentManager = supportFragmentManager
         val mHomeFragment = HomeFragment()
+        mHomeFragment.arguments = bundle
+
         val fragment = mFragmentManager.findFragmentByTag(HomeFragment::class.java.simpleName)
 
         if (fragment !is HomeFragment) {
@@ -72,7 +74,13 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                     mFragment.popBackStack()
                     item.setIcon(R.drawable.ic_map)
                 } else {
+                    val token = intent.getStringExtra(EXTRA_TOKEN)
+                    val bundle = Bundle()
+                    bundle.putString(EXTRA_TOKEN, token)
+
                     val mMapFragment = MapsFragment()
+                    mMapFragment.arguments = bundle
+
                     mFragment.commit {
                         addToBackStack(null)
                         replace(
