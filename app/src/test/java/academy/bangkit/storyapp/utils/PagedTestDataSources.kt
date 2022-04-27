@@ -7,7 +7,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 
 
-class PagedTestDataSources private constructor(private val items: List<Story>) :
+class PagedTestDataSources:
     PagingSource<Int, LiveData<List<Story>>>() {
     companion object {
         fun snapshot(items: List<Story>): PagingData<Story> {
