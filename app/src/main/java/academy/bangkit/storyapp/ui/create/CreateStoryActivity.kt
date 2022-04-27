@@ -92,7 +92,7 @@ class CreateStoryActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener
             if (isChecked) {
                 setupLoading(true)
                 getCurrentLocation()
-            }else{
+            } else {
                 latitude = null
                 longitude = null
             }

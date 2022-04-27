@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         binding.toolbarMain.setOnMenuItemClickListener(this)
     }
 
-
     private fun setupFragment() {
         val token = intent.getStringExtra(EXTRA_TOKEN)
         val bundle = Bundle()
