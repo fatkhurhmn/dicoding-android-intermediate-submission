@@ -35,4 +35,10 @@
     <string name="fill_desc">Füllen Sie die Beschreibung aus</string>
     <string name="date">Datum</string>
     <string name="close_detail">Einzelheiten schließen</string>
+    <string name="retry">Versuchen Sie es nochmal</string>
+    <string name="change_language">Sprache</string>
+    <string name="maps">Karten</string>
+    <string name="share_my_location">Teilen Sie meinen Standort</string>
+    <string name="success_get_current_location">Erfolg beim Abrufen des aktuellen Standorts</string>
+    <string name="failed_get_current_location">Fehler beim Abrufen des aktuellen Standorts. Versuchen Sie es nochmal</string>
 </resources>

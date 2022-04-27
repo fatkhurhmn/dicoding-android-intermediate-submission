@@ -35,4 +35,10 @@
     <string name="fill_desc">Täitke kirjeldus</string>
     <string name="date">Kuupäev</string>
     <string name="close_detail">lähedane detail</string>
+    <string name="retry">Proovi uuesti</string>
+    <string name="change_language">Keel</string>
+    <string name="maps">Maps</string>
+    <string name="share_my_location">Jaga minu asukohta</string>
+    <string name="success_get_current_location">Praeguse asukoha hankimine õnnestus</string>
+    <string name="failed_get_current_location">Praeguse asukoha hankimine ebaõnnestus. Proovige uuesti</string>
 </resources>
