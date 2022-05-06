@@ -9,6 +9,8 @@ class CreateStoryViewModel(private val storyRepository: StoryRepository) : ViewM
     fun uploadNewStory(
         token: String,
         image: MultipartBody.Part,
-        description: RequestBody
-    ) = storyRepository.uploadNewStory("Bearer $token", image, description)
+        description: RequestBody,
+        lat: RequestBody?,
+        lon: RequestBody?
+    ) = storyRepository.uploadNewStory("Bearer $token", image, description, lat, lon)
 }

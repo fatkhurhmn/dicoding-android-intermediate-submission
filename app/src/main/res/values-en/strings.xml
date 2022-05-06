@@ -35,4 +35,10 @@
     <string name="fill_desc">Fill the description</string>
     <string name="date">Date</string>
     <string name="close_detail">close detail</string>
+    <string name="retry">Try again</string>
+    <string name="change_language">Language</string>
+    <string name="maps">Maps</string>
+    <string name="share_my_location">Share my location</string>
+    <string name="success_get_current_location">Success to get current location</string>
+    <string name="failed_get_current_location">Failed to get current location. Try again</string>
 </resources>

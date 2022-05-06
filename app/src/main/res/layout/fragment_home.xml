@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.home.HomeFragment">
 
+    <ProgressBar
+        android:id="@+id/progress_bar_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -33,19 +43,12 @@
             android:contentDescription="@string/add_your_story"
             android:src="@drawable/ic_add_story"
             app:layout_anchor="@id/rv_story"
+            android:theme="@style/Theme.StoryAppLight"
             app:layout_anchorGravity="bottom|end"
             app:tint="@color/white" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <ProgressBar
-        android:id="@+id/progress_bar_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <ImageView
         android:id="@+id/img_error"

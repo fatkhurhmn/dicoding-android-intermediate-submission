@@ -35,4 +35,10 @@
     <string name="fill_desc">Isi deskripsi</string>
     <string name="date">Tanggal</string>
     <string name="close_detail">Tutup detail</string>
+    <string name="retry">Coba lagi</string>
+    <string name="change_language">Bahasa</string>
+    <string name="maps">Peta</string>
+    <string name="share_my_location">Bagikan lokasi saya</string>
+    <string name="success_get_current_location">Berhasil mendapatkan lokasi saat ini</string>
+    <string name="failed_get_current_location">Gagal mendapatkan lokasi saat ini. Coba lagi</string>
 </resources>

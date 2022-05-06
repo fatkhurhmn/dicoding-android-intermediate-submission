@@ -105,7 +105,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun getListStories() {
-        val token = (activity as MainActivity).getToken()
+        val token = arguments?.getString(MainActivity.EXTRA_TOKEN)
         if (token != null) {
             homeViewModel.getAllStory("Bearer $token").observe(viewLifecycleOwner) { result ->
                 listStoryAdapter.submitData(lifecycle, result)
@@ -114,8 +114,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun createStory() {
-        val token = (activity as MainActivity).getToken()
-
+        val token = arguments?.getString(MainActivity.EXTRA_TOKEN)
         binding?.fabAddStory?.setOnClickListener {
             val createStoryIntent = Intent(context, CreateStoryActivity::class.java)
             createStoryIntent.putExtra(MainActivity.EXTRA_TOKEN, token)

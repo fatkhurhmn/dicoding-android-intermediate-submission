@@ -8,7 +8,11 @@ import academy.bangkit.storyapp.ui.main.MainActivity
 import academy.bangkit.storyapp.utils.Extension.showMessage
 import academy.bangkit.storyapp.utils.ViewModelFactory
 import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,9 +24,13 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
+import java.net.URL
+import java.util.concurrent.Executors
+
 
 class MapsFragment : Fragment() {
 
@@ -74,7 +82,7 @@ class MapsFragment : Fragment() {
     }
 
     private fun getAllStory() {
-        val token = (activity as MainActivity).getToken()
+        val token = arguments?.getString(MainActivity.EXTRA_TOKEN)
         if (token != null) {
             mapsViewModel.getAllStoryWithLocation("Bearer $token")
                 .observe(viewLifecycleOwner) { result ->
@@ -102,15 +110,31 @@ class MapsFragment : Fragment() {
     }
 
     private fun showAllStory(stories: List<StoryResponse>) {
+        val executor = Executors.newSingleThreadExecutor()
+        val handler = Handler(Looper.getMainLooper())
+
         for (data in stories) {
             if (data.lat != null && data.lon != null) {
                 val location = LatLng(data.lat, data.lon)
-                mMap.addMarker(
-                    MarkerOptions()
-                        .position(location)
-                        .title("Story by ${data.name}")
-                        .snippet(data.description)
-                )
+                val url = URL(data.photoUrl)
+                executor.execute {
+                    try {
+                        val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+                        handler.post {
+                            val smallMarker = Bitmap.createScaledBitmap(bmp, 200, 200, false)
+                            mMap.addMarker(
+                                MarkerOptions()
+                                    .position(location)
+                                    .title("Story by ${data.name}")
+                                    .snippet(data.description)
+                                    .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
+                            )
+                        }
+                    } catch (e: InterruptedException) {
+                        e.printStackTrace()
+                    }
+                }
+
             }
         }
     }
