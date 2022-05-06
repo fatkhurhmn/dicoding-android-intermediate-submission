@@ -1,22 +1,23 @@
 package academy.bangkit.storyapp.data
 
 import academy.bangkit.storyapp.data.local.UserPreferences
-import academy.bangkit.storyapp.data.remote.response.FileUploadResponse
-import academy.bangkit.storyapp.data.remote.response.ListStoryResponse
-import academy.bangkit.storyapp.data.remote.response.LoginResponse
-import academy.bangkit.storyapp.data.remote.response.RegisterResponse
+import academy.bangkit.storyapp.data.local.entity.Story
+import academy.bangkit.storyapp.data.local.room.StoryDatabase
+import academy.bangkit.storyapp.data.remote.response.*
 import academy.bangkit.storyapp.data.remote.retrofit.ApiService
 import academy.bangkit.storyapp.utils.Extension.getErrorMessage
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
+import androidx.paging.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.HttpException
 
 class StoryRepository private constructor(
     private val apiService: ApiService,
-    private val userPreferences: UserPreferences
+    private val userPreferences: UserPreferences,
+    private val database: StoryDatabase
 ) {
     fun createAccount(
         name: String,
@@ -64,11 +65,24 @@ class StoryRepository private constructor(
             }
         }
 
-    fun getAllStories(token: String): LiveData<Result<ListStoryResponse>> =
+    @OptIn(ExperimentalPagingApi::class)
+    fun getAllStory(token: String): LiveData<PagingData<Story>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 5
+            ),
+            remoteMediator = StoryRemoteMediator(database, apiService, token),
+            pagingSourceFactory = {
+                database.storyDao().getAllStory()
+            }
+        ).liveData
+    }
+
+    fun getAllStoryWithLocation(token: String): LiveData<Result<ListStoryResponse>> =
         liveData {
             emit(Result.Loading)
             try {
-                val response = apiService.getAllStories(token)
+                val response = apiService.getAllStories(token = token, location = 1)
                 emit(Result.Success(response))
             } catch (e: Exception) {
                 when (e) {
@@ -123,9 +137,10 @@ class StoryRepository private constructor(
         private var instance: StoryRepository? = null
         fun getInstance(
             apiService: ApiService,
-            userPreferences: UserPreferences
+            userPreferences: UserPreferences,
+            database: StoryDatabase
         ): StoryRepository = instance ?: synchronized(this) {
-            instance ?: StoryRepository(apiService, userPreferences)
+            instance ?: StoryRepository(apiService, userPreferences, database)
         }.also { instance = it }
     }
 }

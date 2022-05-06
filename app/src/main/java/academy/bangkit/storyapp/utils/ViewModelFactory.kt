@@ -6,11 +6,14 @@ import academy.bangkit.storyapp.ui.auth.login.LoginViewModel
 import academy.bangkit.storyapp.ui.auth.register.RegisterViewModel
 import academy.bangkit.storyapp.ui.create.CreateStoryViewModel
 import academy.bangkit.storyapp.ui.main.MainViewModel
+import academy.bangkit.storyapp.ui.main.home.HomeViewModel
+import academy.bangkit.storyapp.ui.main.maps.MapsViewModel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import java.lang.IllegalArgumentException
 
+@Suppress("UNCHECKED_CAST")
 class ViewModelFactory private constructor(private val storyRepository: StoryRepository) :
     ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -26,6 +29,12 @@ class ViewModelFactory private constructor(private val storyRepository: StoryRep
             }
             modelClass.isAssignableFrom(CreateStoryViewModel::class.java) -> {
                 CreateStoryViewModel(storyRepository) as T
+            }
+            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
+                HomeViewModel(storyRepository) as T
+            }
+            modelClass.isAssignableFrom(MapsViewModel::class.java) -> {
+                MapsViewModel(storyRepository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel Class:" + modelClass.name)
         }

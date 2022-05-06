@@ -1,7 +1,7 @@
 package academy.bangkit.storyapp.ui.detail
 
 import academy.bangkit.storyapp.R
-import academy.bangkit.storyapp.data.remote.response.Story
+import academy.bangkit.storyapp.data.local.entity.Story
 import academy.bangkit.storyapp.databinding.ActivityStoryDetailBinding
 import academy.bangkit.storyapp.utils.Extension.loadImage
 import android.os.Bundle
